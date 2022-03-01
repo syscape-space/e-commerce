@@ -19,22 +19,22 @@ class CreateProductsTable extends Migration
             $table->text('desc');
             $table->string('SKU');
 
-            $table->foreignId('category_id')
-                  ->constrained('product_category')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+            // $table->foreignId('category_id')
+            //       ->constrained('product_category')
+            //       ->onUpdate('cascade')
+            //       ->onDelete('cascade');
 
-            $table->foreignId('inventory_id')
-                  ->constrained('product_inventory')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+            // $table->foreignId('inventory_id')
+            //       ->constrained('product_inventory')
+            //       ->onUpdate('cascade')
+            //       ->onDelete('cascade');
 
-            $table->decimal('price');
+            // $table->decimal('price');
 
-            $table->foreignId('discount_id')
-                  ->constrained('discount')
-                  ->onUpdate('cascade')
-                  ->onDelete('cascade');
+            // $table->foreignId('discount_id')
+            //       ->constrained('discount')
+            //       ->onUpdate('cascade')
+            //       ->onDelete('cascade');
             
             $table->softDeletes();
             $table->timestamps();
