@@ -29,7 +29,7 @@ class CreateProductsTable extends Migration
             //       ->onUpdate('cascade')
             //       ->onDelete('cascade');
 
-            // $table->decimal('price');
+            $table->decimal('price');
 
             // $table->foreignId('discount_id')
             //       ->constrained('discount')
