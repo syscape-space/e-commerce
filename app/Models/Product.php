@@ -8,16 +8,18 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     use HasFactory;
-    protected $fillable = ['name', 'desc','SKU','price'];
+    protected $fillable = [
+        'name', 'desc','SKU','price',
+    ];
 
 
     //every product belongs to one category
-    public function category(){
-        return $this->belongsTo(Product_category::class);
-    }
+    // public function category(){
+    //     return $this->belongsTo(Product_category::class);
+    // }
 
     //every product belongs to one inventory
-    public function inventory(){
-        return $this->belongsTo(Product_inventory::class);
-    }
+    // public function inventory(){
+    //     return $this->belongsTo(Product_inventory::class);
+    // }
 }
