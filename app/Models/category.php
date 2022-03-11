@@ -5,10 +5,10 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class categorie extends Model
+class Category extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['id','name','image','description','created_at','deleted_at','modified_at'];
+    protected $fillable = ['name','image','description'];
     public $timestamp = true;
 }
