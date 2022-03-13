@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\categorie;
+use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
@@ -28,12 +28,15 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::resource('products',ProductController::class);
 
 /* -----------   categoried routes      -------------------*/
-Route::controller(categorie::class)->group(function () {
+Route::controller(CategoryController::class)->group(function () {
     Route::prefix('categorie')->group(function () {
-    Route::get('/Create', 'Create')->name('create_categorie');
-    Route::get('/Destroy/id', 'Destroy')->name('Destroy_categorie');
-    Route::get('/Update/id', 'Update')->name('Update_categorie');
-    Route::get('/Read_all', 'Read_all')->name('Read_all_categorie');
+        Route::get('/index', 'index')->name('index_category');
+        Route::get('/create', 'create')->name('create_category');
+        Route::get('/store', 'store')->name('store_category');
+        Route::get('/show', 'show')->name('show_category');
+        Route::get('/edit', 'edit')->name('edit_category');
+        Route::get('/update/id', 'update')->name('update_category');
+        Route::get('/destroy/id', 'destroy')->name('edit_category');
    });
 });
 
