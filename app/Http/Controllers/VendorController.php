@@ -14,7 +14,13 @@ class VendorController extends Controller
      */
     public function index()
     {
-        //
+    
+           $vendors = Vendor::latest()->paginate(5);
+
+    
+            return view('vendors.index',compact('vendors'))
+
+            ->with('i', (request()->input('page', 1) - 1) * 5);
     }
 
     /**
@@ -25,6 +31,9 @@ class VendorController extends Controller
     public function create()
     {
         //
+        return view('vendors.create');
+
+
     }
 
     /**
@@ -36,7 +45,21 @@ class VendorController extends Controller
     public function store(Request $request)
     {
         //
+
+        
+
+    
+
+        Vendor::create($request->all());
+
+     
+
+        return redirect()->route('vendors.index')
+
+                        ->with('success','vendor created successfully.');
+
     }
+
 
     /**
      * Display the specified resource.
@@ -46,7 +69,8 @@ class VendorController extends Controller
      */
     public function show(Vendor $vendor)
     {
-        //
+        
+        return view('vendors.show',compact('vendor'));
     }
 
     /**
@@ -58,6 +82,7 @@ class VendorController extends Controller
     public function edit(Vendor $vendor)
     {
         //
+        return view('vendors.edit',compact('vendor'));
     }
 
     /**
@@ -70,6 +95,25 @@ class VendorController extends Controller
     public function update(Request $request, Vendor $vendor)
     {
         //
+        $request->validate([
+
+            'name' => 'required',
+
+            'detail' => 'required',
+
+        ]);
+
+    
+
+        $vendor->update($request->all());
+
+    
+
+        return redirect()->route('vendors.index')
+
+                        ->with('success',' vendorupdated successfully');
+
+
     }
 
     /**
@@ -80,6 +124,13 @@ class VendorController extends Controller
      */
     public function destroy(Vendor $vendor)
     {
-        //
+          $vendor->delete();
+
+    
+
+        return redirect()->route('vendors.index')
+
+                        ->with('success','vendor deleted successfully');
+
     }
 }
