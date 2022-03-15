@@ -9,17 +9,22 @@ class Product extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'name','image','description','price','categories_id','sub_categories_id',
+        'name','image','description','price','vendor_id','categories_id','sub_categories_id',
     ];
 
 
-    //every product belongs to one category
-    // public function category(){
-    //     return $this->belongsTo(Product_category::class);
-    // }
+    // every product belongs to one category
+    public function category(){
+        return $this->belongsTo(Category::class);
+    }
 
-    //every product belongs to one inventory
-    // public function inventory(){
-    //     return $this->belongsTo(Product_inventory::class);
-    // }
+    // every product belongs to one inventory
+    public function subCategory(){
+        return $this->belongsTo(SubCategory::class);
+    }
+
+    // every product belongs to one vendor
+    public function vendor(){
+        return $this->belongsTo(Vendor::class);
+    }
 }
