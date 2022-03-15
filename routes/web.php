@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,5 +23,20 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/home', [HomeController::class, 'index'])->name('home');
+
 Route::resource('products',ProductController::class);
+
+/* -----------   categoried routes      -------------------*/
+Route::controller(CategoryController::class)->group(function () {
+    Route::prefix('categorie')->group(function () {
+        Route::get('/index', 'index')->name('index_category');
+        Route::get('/create', 'create')->name('create_category');
+        Route::get('/store', 'store')->name('store_category');
+        Route::get('/show', 'show')->name('show_category');
+        Route::get('/edit', 'edit')->name('edit_category');
+        Route::get('/update/id', 'update')->name('update_category');
+        Route::get('/destroy/id', 'destroy')->name('edit_category');
+   });
+});
+
