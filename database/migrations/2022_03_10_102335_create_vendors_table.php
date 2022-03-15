@@ -15,16 +15,16 @@ class CreateVendorsTable extends Migration
     {
         Schema::create('vendors', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('phone_number', 15);
+            $table->string('name')->nullable();
+            $table->string('email')->unique()->nullable();
+            $table->string('phone_number')->nullable();
             $table->text('address')->nullable();
             $table->string('city', 50)->nullable();
-            $table->string('state', 50)->nullable();
             $table->string('country', 50)->nullable();
             $table->string('zipcode', 50)->nullable();
             $table->integer('is_active')->default('0');
             $table->integer('created_by')->default('0');
+
             // add foreign key  from vendors table to users  and products tables 
 
             // $table->foreignId('product_id')
@@ -41,6 +41,7 @@ class CreateVendorsTable extends Migration
             $table->softDeletes();
             $table->timestamps();
         });
+        
     }
 
     /**
