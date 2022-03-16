@@ -18,6 +18,8 @@ class CreateCategoriesTable extends Migration
             $table->string('name');
             $table->string('image');
             $table->text('description');
+            $table->integer('products_id');
+            $table->integer('sub_categories_id');
             $table->softDeletes();
             $table->timestamps();
         });

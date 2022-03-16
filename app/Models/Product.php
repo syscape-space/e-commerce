@@ -4,27 +4,30 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Product extends Model
 {
     use HasFactory;
+    use SoftDeletes;
+    
     protected $fillable = [
-        'name','image','description','price','vendor_id','categories_id','sub_categories_id',
+        'name','image','description','price','vendor_id','category_id','sub_categories_id',
     ];
 
 
     // every product belongs to one category
     public function category(){
-        return $this->belongsTo(Category::class);
+        return $this->belongsTo(category::class,'categories_id');
     }
 
     // every product belongs to one inventory
     public function subCategory(){
-        return $this->belongsTo(SubCategory::class);
+        return $this->belongsTo(SubCategory::class,'sub_categories_id');
     }
 
     // every product belongs to one vendor
     public function vendor(){
-        return $this->belongsTo(Vendor::class);
+        return $this->belongsTo(Vendor::class,'vendor_id');
     }
 }

@@ -3,6 +3,8 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
+use App\Models\Product;
+use App\Models\SubCategory;
 
 class CategoryFactory extends Factory
 {
@@ -17,6 +19,8 @@ class CategoryFactory extends Factory
             'name'=> $this->faker->unique()->sentence(2),
             'image'=>'https://via.placeholder.com/350x150',
             'description'=> $this->faker->realText(rand(30, 60)),
+            'products_id'=>1,
+            'sub_categories_id'=>1,
         ];
     }
 }

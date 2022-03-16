@@ -26,8 +26,28 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
+
+#### start Product route ####
+
+//resource
 Route::resource('products',ProductController::class);
+//softDelete route
+Route::get('products/soft/delete/{id}', [ProductController::class,'softdelete'])->name('products.soft.delete');
+//hard route
+Route::get('products/hard/delete/{id}', [ProductController::class,'hardDelete'])->name('products.hard.delete');
+//trash route
+Route::get('products.trash', [ProductController::class, 'trash'])->name('products.trash');
+//Back from trash  route
+Route::get('products/back/from/trash/{id}', [ProductController::class, 'backFromTrash'])->name('products.back');
+
+#### end products route ####
+
+
 Route::resource('vendors', VendorController::class);
+
+
+
 
 #### start subCategories route ####
 
