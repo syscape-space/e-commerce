@@ -7,79 +7,89 @@ use Illuminate\Http\Request;
 
 class SubCategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        $subCategories = SubCategory::latest()->paginate(4);
+        return view('subCategories.index', compact('subCategories'));;
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        //
+         return view('subCategories.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'name'=>'required',
+            'categories_id'=>'required'
+        ]);
+
+        SubCategory::create($request->all());
+        return redirect()->route('subCategories.index')->with('success','SubCategory is created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(SubCategory $subcategory)
+    public function show($id)
     {
-        //
+        $subCategory = SubCategory::find($id)->first();
+        return view('subCategories.show',compact('subCategory'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(SubCategory $subcategory)
+    
+    public function edit($id)
     {
-        //
+        $subCategory = SubCategory::find($id)->first();
+
+        return view('subCategories.edit',compact('subCategory'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, SubCategory $subcategory)
     {
-        //
+        $request->validate([
+            'name'=>'required',
+            'categories_id'=>'required'
+        ]);
+
+        $subcategory->create($request->all());
+
+
+         return redirect()->route('subCategories.index')
+         ->with('success', 'SubCategory Is Updated Successfully'); 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(SubCategory $subcategory)
+    public function destroy($id)
     {
-        //
+        //$subcategory->delete();
+        SubCategory::find($id)->first()->delete();
+        return redirect()->route('subCategories.index')->with('success', 'SubCategory Is Deleted Successfully');
+    }
+
+    public function trash()
+    {
+        $subCategories = SubCategory::onlyTrashed()->latest()->paginate(4);
+        return view('subCategories.trash', compact('subCategories'));
+    }
+
+    //soft Delete
+    public function softdelete($id)
+    {
+        $subCategory = SubCategory::find($id)->delete();      
+         return redirect()->route('subCategories.index')->with('success', 'SubCategory Is Moved To Trash');
+    }
+    //Hard Delete
+    public function hardDelete($id)
+    {
+        $subCategory = SubCategory::onlyTrashed()->where('id',$id)->forcedelete();      
+         return redirect()->route('subCategories.trash')->with('success', 'SubCategory Is Deleted Successfully');        
+    }
+//Back from trash 
+    public function backFromTrash ($id)
+    {
+        $task = SubCategory::onlyTrashed()->where('id',$id)->first()->restore();      
+         return redirect()->route('subCategories.index')->with('success', 'SubCategory Is Backed Successfully');
     }
 }
