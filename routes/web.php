@@ -1,12 +1,14 @@
 <?php
 
+use App\Http\Controllers\categorie;
+use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\SubCategoryController;
-
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,11 +45,7 @@ Route::get('products/back/from/trash/{id}', [ProductController::class, 'backFrom
 
 #### end products route ####
 
-
 Route::resource('vendors', VendorController::class);
-
-
-
 
 #### start subCategories route ####
 
@@ -64,3 +62,14 @@ Route::get('subCategories/back/from/trash/{id}', [SubCategoryController::class, 
 
 #### end subCategories route ####
 
+# --------- Categories routes ----------------------
+Route::resource('Categories', CategoriesController::class);
+
+Route::controller(CategoriesController::class)->group(function () {
+    Route::prefix('Categories')->group(function () {
+        Route::get('.soft/delete/{id}', 'softdelete')->name('Categories.soft.delete');
+        Route::get('/hard/delete/{id}','hardDelete')->name('categories.hard.delete');
+        Route::get('/back/from/trash/{id}', 'backFromTrash')->name('categories.back');
+    });
+    Route::get('Categories.trash', 'trash')->name('categories.trash');
+});

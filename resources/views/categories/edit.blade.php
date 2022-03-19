@@ -8,10 +8,10 @@
 <div class="row">
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
-            <h2>Edit Products</h2>
+            <h2>Edit Categories</h2>
         </div>
         <div class="pull-right">
-            <a class="btn btn-primary" href="{{ route('products.index') }}"> Back</a>
+            <a class="btn btn-primary" href="{{ route('Categories.index') }}"> Back</a>
         </div>
     </div>
 </div>
@@ -32,7 +32,7 @@
 
 
 
-<form action="{{ route('products.update',$product->id) }}" method="POST">
+<form action="{{ route('Categories.update',$category->id)}}" method="POST">
     @csrf @method('PUT')
     <div class="row">
 

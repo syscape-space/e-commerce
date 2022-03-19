@@ -84,6 +84,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
+        return $product;
         return view('products.show')->with('product',$product);
     }
 
@@ -167,19 +168,19 @@ class ProductController extends Controller
     //soft Delete
     public function softdelete($id)
     {
-        $product = Product::find($id)->delete();      
+        $product = Product::find($id)->delete();
          return redirect()->route('products.index')->with('success', 'Product Is Moved To Trash');
     }
     //Hard Delete
     public function hardDelete($id)
     {
-        $product = Product::onlyTrashed()->where('id',$id)->forcedelete();      
-         return redirect()->route('products.trash')->with('success', 'Product Is Deleted Successfully');        
+        $product = Product::onlyTrashed()->where('id',$id)->forcedelete();
+         return redirect()->route('products.trash')->with('success', 'Product Is Deleted Successfully');
     }
-    //Back from trash 
+    //Back from trash
     public function backFromTrash ($id)
     {
-        $task = Product::onlyTrashed()->where('id',$id)->first()->restore();      
+        $task = Product::onlyTrashed()->where('id',$id)->first()->restore();
          return redirect()->route('products.index')->with('success', 'Product Is Back from trash Successfully');
     }
 }
