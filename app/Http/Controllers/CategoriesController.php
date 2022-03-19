@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\StorecategoryRequest;
+use App\Http\Requests\UpdatecategoryRequest;
 use App\Models\Category;
 use App\Models\Product;
 use App\Models\SubCategory;
@@ -72,8 +73,9 @@ class CategoriesController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function show(Category $category)
+    public function show($id)
     {
+        $category = Category::find($id);
         return view('categories.show',compact('category'));
 
     }
@@ -84,12 +86,13 @@ class CategoriesController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function edit(category $category)
+    public function edit($id)
     {
-        // if(auth()->user()->id !== $category->id){
+        $category = Category::find($id);
+        // if(auth()->user()->id !== $id){
         //     return redirect('Categories')->with('error','sorry You can\'t edit this category');
         // }
-        return view('Categories.edit')->with('category',$category);
+        return view('Categories.edit',compact('category'));
 
     }
 
@@ -100,9 +103,10 @@ class CategoriesController extends Controller
      * @param  \App\Models\category  $category
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, category $category,$id)
+    public function update(UpdatecategoryRequest $request, category $category,$id)
     {
-        // retu
+        Category::find($id)->update($request->all());
+        return redirect('Categories')->with(['success'=>'Category has been updated']);
     }
 
     /**
