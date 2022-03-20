@@ -52,13 +52,13 @@ class ProductController extends Controller
             'name'=>'required|Unique:products',
             'description'=>'required',
             'price'=>'required|Numeric',
-            'image'=>'max:1999|nullable'
+            'image'=>'max:1999|image|nullable'
         ]);
 
         //Handle file upload
         if($request->hasFile('image')){
             $file=$request->file('image');
-            $filename=md5(file_get_contents($file->getRealPath())) . $file->extension();
+            $filename=md5(file_get_contents($file->getRealPath())) .'.'. $file->extension();
             $path=$request->file('image')->storeAs('public/products_image',$filename);
 
         }else {
@@ -68,8 +68,8 @@ class ProductController extends Controller
         $product->name=$request->input('name');
         $product->image=$filename;
         $product->vendor_id=auth()->user()->id;
-        $product->categories_id=0;
-        $product->sub_categories_id=0;
+        $product->categories_id=1;
+        $product->sub_categories_id=1;
         $product->description=$request->input('description');
         $product->price=$request->input('price');
         $product->save();
@@ -84,7 +84,6 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return $product;
         return view('products.show')->with('product',$product);
     }
 
@@ -112,7 +111,7 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $this->validate($request,[
-            'name'=>'required|Unique:products',
+            'name'=>'required',
             'description'=>'required',
             'price'=>'required|Numeric',
             'image'=>'max:1999|image|nullable'
@@ -121,7 +120,7 @@ class ProductController extends Controller
         //Handle file upload
         if($request->hasFile('image')){
             $file=$request->file('image');
-            $filename=md5(file_get_contents($file->getRealPath())) . $file->extension();
+            $filename=md5(file_get_contents($file->getRealPath())) .'.'. $file->extension();
             $path=$request->file('image')->storeAs('public/products_image',$filename);
 
         }else {
@@ -129,9 +128,9 @@ class ProductController extends Controller
         }
         $product->name=$request->input('name');
         $product->image=$filename;
-        $product->vendor_id=auth()->id;
-        $product->categories_id=0;
-        $product->sub_categories_id=0;
+        $product->vendor_id=auth()->user()->id;
+        $product->categories_id=1;
+        $product->sub_categories_id=1;
         $product->description=$request->input('description');
         $product->price=$request->input('price');
         if($request->hasFile('image')){

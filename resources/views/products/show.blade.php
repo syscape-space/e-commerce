@@ -60,6 +60,19 @@
 
             <div class="form-group">
 
+                <strong>Price:</strong>
+
+                {{ $product->price }}
+
+            </div>
+
+        </div>
+
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
                 <strong>category:</strong>
 
                 {{ $product->category->name }}
@@ -75,6 +88,18 @@
                 <strong>Sub category:</strong>
 
                 {{ $product->subCategory->name }}
+
+            </div>
+
+        </div>
+
+        <div class="col-xs-12 col-sm-12 col-md-12">
+
+            <div class="form-group">
+
+                <strong>image:</strong>
+
+                <img src="../storage/products_image/{{$product->image}}" class="rounded mx-auto d-block" alt="product_image">
 
             </div>
 

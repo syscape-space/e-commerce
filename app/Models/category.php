@@ -11,7 +11,7 @@ class Category extends Model
     use HasFactory;
     use SoftDeletes;
 
-    protected $fillable = ['name','image','description'];
+    protected $fillable = ['name','image','description','products_id','sub_categories_id'];
     public $timestamp = true;
 
     // every category has many product
