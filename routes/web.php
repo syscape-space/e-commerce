@@ -30,6 +30,7 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 //Notification Route
 Route::get('/home/notification',[NotificationController::class,'productNotify']);
+Route::get('/notification/{id}', [NotificationController::class,'toMarkAsRead'])->name('notifications.read');
 
 ##################################33# start Product route ################################
 
