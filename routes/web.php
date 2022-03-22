@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\categorie;
 use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VendorController;
@@ -29,8 +28,10 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+//Notification Route
+Route::get('/home/notification',[NotificationController::class,'productNotify']);
 
-#### start Product route ####
+##################################33# start Product route ################################
 
 //resource
 Route::resource('products',ProductController::class);
@@ -47,7 +48,7 @@ Route::get('products/back/from/trash/{id}', [ProductController::class, 'backFrom
 
 Route::resource('vendors', VendorController::class);
 
-#### start subCategories route ####
+#########################3 start subCategories route #########################33#
 
 //resource
 Route::resource('subCategories',SubCategoryController::class);

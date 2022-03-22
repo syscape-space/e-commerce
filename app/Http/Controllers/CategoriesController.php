@@ -54,8 +54,8 @@ class CategoriesController extends Controller
     {
         if($request->hasFile('image')){
             $file=$request->file('image');
-            $filename=md5(file_get_contents($file->getRealPath())) . $file->extension();
-            $path=$request->file('image')->storeAs('public/products_image',$filename);
+            $filename=md5(file_get_contents($file->getRealPath())) .'.'. $file->extension();
+            $path=$request->file('image')->storeAs('public/categories_image',$filename);
 
         }else {
             $filename='noImage.jpg';

@@ -6,7 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
-class HomeController extends Controller
+class NotificationController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -18,14 +18,8 @@ class HomeController extends Controller
         $this->middleware('auth');
     }
 
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function index()
-    {
-        $user=User::find(Auth::user()->id);
-        return view('home')->with('user',$user);
+    public function productNotify(){
+        $users=User::find(Auth::user()->id);
+        return view('notification')->with('users',$users);
     }
 }
