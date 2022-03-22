@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\User;
+use App\Notifications\ProductNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 
 
@@ -48,6 +51,7 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $users=User::all();
         $this->validate($request,[
             'name'=>'required|Unique:products',
             'description'=>'required',
@@ -73,6 +77,7 @@ class ProductController extends Controller
         $product->description=$request->input('description');
         $product->price=$request->input('price');
         $product->save();
+        Notification::send($users,new ProductNotification($request->name));
         return redirect('products')->with('success','product added successfuly');
     }
 

@@ -1,9 +1,8 @@
 <?php
 
-use App\Http\Controllers\categorie;
 use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\VendorController;
@@ -29,8 +28,17 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+//Notification Route
+Route::get('/home/notification',[NotificationController::class,'productNotify']);
+Route::get('/home/seennotification',[NotificationController::class,'seenNotification'])->name('notifications.read');
+Route::get('/notification.mark.as.read/{id}', [NotificationController::class,'toMarkAsRead'])->name('notifications.markasread');
+Route::get('/notification.mark.as.un.read/{id}', [NotificationController::class,'toMarkAsUnRead'])->name('notifications.markasunread');
+Route::get('/delete.all.notification',[NotificationController::class,'deleteAll'])->name('deleteAllNotification');
+Route::get('/delete.notification/{id}',[NotificationController::class,'delete'])->name('deleteNotification');
+Route::get('/mark.all.as.read.notification',[NotificationController::class,'toMarkAllAsRead'])->name('markAllAsRead.notification');
+Route::get('/mark.all.as.un.read.notification',[NotificationController::class,'toMarkAllAsUnRead'])->name('markAllAsUnRead.notification');
 
-#### start Product route ####
+##################################33# start Product route ################################
 
 //resource
 Route::resource('products',ProductController::class);
@@ -47,7 +55,7 @@ Route::get('products/back/from/trash/{id}', [ProductController::class, 'backFrom
 
 Route::resource('vendors', VendorController::class);
 
-#### start subCategories route ####
+#########################3 start subCategories route #########################33#
 
 //resource
 Route::resource('subCategories',SubCategoryController::class);
@@ -62,7 +70,7 @@ Route::get('subCategories/back/from/trash/{id}', [SubCategoryController::class, 
 
 #### end subCategories route ####
 
-# --------- Categories routes ----------------------
+# ---------------------------- Categories routes -----------------------------------
 Route::resource('Categories', CategoriesController::class);
 
 Route::controller(CategoriesController::class)->group(function () {
