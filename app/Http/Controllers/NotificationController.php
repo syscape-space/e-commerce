@@ -40,7 +40,7 @@ class NotificationController extends Controller
     //to mark as read
     public function toMarkAsUnRead($id){
         DatabaseNotification::find($id)->markAsUnRead();
-        return redirect('/home/notification')->with('success', 'Notification mark as read');
+        return redirect('/home/notification')->with('success', 'Notification mark as unread');
     }
 
     //to mark all as unread
@@ -66,7 +66,7 @@ class NotificationController extends Controller
     public function deleteAll(){
         $notification=DatabaseNotification::where('notifiable_id',Auth::user()->id);
         $notification->delete();
-        return redirect('/home/notification')->with('success','notification has been removed');
+        return redirect('/home/notification')->with('success','all notification has been removed');
     }
 
 }
