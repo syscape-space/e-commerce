@@ -14,7 +14,7 @@
 
         <div class="pull-right">
 
-            <a class="btn btn-primary" href="/e-commerce/public/home/notification"> Back</a>
+            <a class="btn btn-primary" href="/notification"> Back</a>
 
         </div>
         

@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoriesController;
-use App\Http\Controllers\HomeController;
+use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
@@ -29,8 +29,8 @@ Auth::routes();
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 //Notification Route
-Route::get('/home/notification',[NotificationController::class,'productNotify']);
-Route::get('/home/seennotification',[NotificationController::class,'seenNotification'])->name('notifications.read');
+Route::get('/notification',[NotificationController::class,'productNotify']);
+Route::get('/seennotification',[NotificationController::class,'seenNotification'])->name('notifications.read');
 Route::get('/notification.mark.as.read/{id}', [NotificationController::class,'toMarkAsRead'])->name('notifications.markasread');
 Route::get('/notification.mark.as.un.read/{id}', [NotificationController::class,'toMarkAsUnRead'])->name('notifications.markasunread');
 Route::get('/delete.all.notification',[NotificationController::class,'deleteAll'])->name('deleteAllNotification');

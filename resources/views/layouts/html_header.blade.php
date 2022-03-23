@@ -163,7 +163,7 @@
                     @endif
                 @else
                     <li class="nav-item">
-                      <a class="nav-link" href="/e-commerce/public/home/notification">Notification</a>
+                      <a class="nav-link" href="/notification">Notification</a>
                     </li>
 
                     <li class="nav-item dropdown">
