@@ -23,6 +23,6 @@ class SubCategory extends Model
 
     // each SubCategory belongsTo one Category
     public function categories(){
-        return $this->belongsTo(SubCategory::class, 'categories_id');
+        return $this->belongsTo(Category::class, 'categories_id');
     }
 }

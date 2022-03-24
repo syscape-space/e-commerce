@@ -23,14 +23,20 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/Dashboard', function () {
+    return view('admin.layouts.main');
+});
+
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::resource('products',ProductController::class);
 Route::resource('vendors', VendorController::class);
+Route::resource('categories', VendorController::class);
+
+
 
 #### start subCategories route ####
-
 //resource
 Route::resource('subCategories',SubCategoryController::class);
 //softDelete route
@@ -41,6 +47,5 @@ Route::get('subCategories/hard/delete/{id}', [SubCategoryController::class,'hard
 Route::get('subCategories.trash', [SubCategoryController::class, 'trash'])->name('subCategories.trash');
 //Back from trash  route
 Route::get('subCategories/back/from/trash/{id}', [SubCategoryController::class, 'backFromTrash'])->name('subCategories.back');
-
 #### end subCategories route ####
 

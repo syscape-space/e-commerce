@@ -10,14 +10,14 @@ class SubCategoryController extends Controller
 
     public function index()
     {
-        $subCategories = SubCategory::latest()->paginate(4);
-        return view('subCategories.index', compact('subCategories'));;
+        $subcategories = SubCategory::latest()->paginate(4);
+        return view('admin.subcategory.index', compact('subcategories'));;
     }
 
 
     public function create()
     {
-         return view('subCategories.create');
+         return view('admin.subcategory.create');
     }
 
 
@@ -26,36 +26,36 @@ class SubCategoryController extends Controller
 
         $request->validate([
             'name'=>'required',
-            'categories_id'=>'required'
+            'category'=>'required'
         ]);
 
-        SubCategory::create($request->all());
+        Subcategory::create(['name'=>$request->name,'categories_id'=>$request->category]);
         return redirect()->route('subCategories.index')->with('success','SubCategory is created successfully.');
     }
 
     public function show($id)
     {
-        $subCategory = SubCategory::find($id)->first();
-        return view('subCategories.show',compact('subCategory'));
+
+        $subcategory = SubCategory::find($id);
+        return view('admin.subcategory.show',compact('subcategory'));
     }
 
     
     public function edit($id)
-    {
-        $subCategory = SubCategory::find($id)->first();
-
-        return view('subCategories.edit',compact('subCategory'));
+    { 
+        $subcategory = SubCategory::find($id);
+        return view('admin.subcategory.edit',compact('subcategory'));
     }
 
-    public function update(Request $request, SubCategory $subcategory)
+    public function update(Request $request, $id)
     {
         $request->validate([
             'name'=>'required',
-            'categories_id'=>'required'
+            'category'=>'required'
         ]);
 
-        $subcategory->create($request->all());
-
+        $subcategory = SubCategory::find($id);
+        $subcategory->update(['name'=>$request->name,'categories_id'=>$request->category]);
 
          return redirect()->route('subCategories.index')
          ->with('success', 'SubCategory Is Updated Successfully'); 
@@ -70,8 +70,8 @@ class SubCategoryController extends Controller
 
     public function trash()
     {
-        $subCategories = SubCategory::onlyTrashed()->latest()->paginate(4);
-        return view('subCategories.trash', compact('subCategories'));
+        $subcategories = SubCategory::onlyTrashed()->latest()->paginate(4);
+        return view('admin.subcategory.trash', compact('subcategories'));
     }
 
     //soft Delete
