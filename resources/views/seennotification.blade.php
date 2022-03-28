@@ -14,7 +14,7 @@
 
         <div class="pull-right">
 
-            <a class="btn btn-primary" href="/e-commerce/public/notification"> Back</a>
+            <a class="btn btn-primary" href="{{route('notifications')}}"> Back</a>
 
         </div>
         

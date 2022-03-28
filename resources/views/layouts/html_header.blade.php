@@ -163,7 +163,7 @@
                     @endif
                 @else
                     <li class="nav-item">
-                      <a class="nav-link" href="/e-commerce/public/notification">Notification</a>
+                      <a class="nav-link" href="{{route('notifications')}}">Notification</a>
                     </li>
 
                     <li class="nav-item dropdown">
