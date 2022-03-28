@@ -27,6 +27,6 @@ class HomeController extends Controller
     public function index()
     {
         $user=User::find(Auth::user()->id);
-        return view('home')->with('user', $user);
+        return redirect()->route('frontend')->with('user', $user);
     }
 }

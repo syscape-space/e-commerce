@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\HomeController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SendEmailNotificationController;
 use App\Http\Controllers\VendorController;
 use App\Http\Controllers\SubCategoryController;
 use Illuminate\Support\Facades\Auth;
@@ -29,9 +30,10 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 
+
 ####### Frontend route #######
 
-Route::get('/', [FrontProductListController::class , 'index'] );
+Route::get('/', [FrontProductListController::class , 'index'] )->name('frontend');
 Route::get('/product/{id}', [FrontProductListController::class , 'show'] )->name('product.view');
 Route::get('/users', [UserController::class , 'list'] )->name('users.list');
 
@@ -49,6 +51,10 @@ Route::get('/Dashboard', function () {
 
 //Notification Route
 Route::get('/notification',[NotificationController::class,'productNotify']);
+
+//################################# Product Notification Route ##############################
+Route::get('/notification',[NotificationController::class,'productNotify'])->name('notifications');
+
 Route::get('/seennotification',[NotificationController::class,'seenNotification'])->name('notifications.read');
 Route::get('/notification.mark.as.read/{id}', [NotificationController::class,'toMarkAsRead'])->name('notifications.markasread');
 Route::get('/notification.mark.as.un.read/{id}', [NotificationController::class,'toMarkAsUnRead'])->name('notifications.markasunread');
@@ -56,6 +62,7 @@ Route::get('/delete.all.notification',[NotificationController::class,'deleteAll'
 Route::get('/delete.notification/{id}',[NotificationController::class,'delete'])->name('deleteNotification');
 Route::get('/mark.all.as.read.notification',[NotificationController::class,'toMarkAllAsRead'])->name('markAllAsRead.notification');
 Route::get('/mark.all.as.un.read.notification',[NotificationController::class,'toMarkAllAsUnRead'])->name('markAllAsUnRead.notification');
+
 
 # ---------------------------- Categories routes -----------------------------------
 Route::resource('categories', CategoriesController::class);
@@ -82,6 +89,12 @@ Route::get('subCategories.trash', [SubCategoryController::class, 'trash'])->name
 //Back from trash  route
 Route::get('subCategories/back/from/trash/{id}', [SubCategoryController::class, 'backFromTrash'])->name('subCategories.back');
 #### end subCategories route ####
+
+
+##################################### Send email to all users Route #############################
+Route::get('/send.email',[SendEmailNotificationController::class,'sendEmailToUsers'])->name('send.email');
+Route::post('/send.email.to.all.users',[SendEmailNotificationController::class,'sendEmailToAllUsers'])->name('send.email.to.all.users');
+##################################33# start Product route ################################
 
 
 ################################# start Product route ################################
