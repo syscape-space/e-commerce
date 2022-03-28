@@ -12,18 +12,14 @@ class Vendor extends Model
         'name',
         'email',
         'phone_number',
-        'address',
-        'city',
-        'state',
-        'country',
-         'zipcode',
-         'is_active',
-         'created_by',
+        'is_active',
          
-
-    
     ];
     public $timestamp = true;
+
+    public function products(){
+        return $this->hasMany(Product::class, 'vendor_id');
+    }
 
 
 }

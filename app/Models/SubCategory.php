@@ -13,16 +13,16 @@ class SubCategory extends Model
     use SoftDeletes;
     
     protected $fillable = [
-        'name', 'categories_id'
+        'name', 'category_id'
     ];
 
     // each subCategory has many products
     public function products(){
-        return $this->hasMany(Product::class, 'sub_categories_id');
+        return $this->hasMany(Product::class, 'subCategory_id');
     }
 
     // each SubCategory belongsTo one Category
     public function categories(){
-        return $this->belongsTo(Category::class, 'categories_id');
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }

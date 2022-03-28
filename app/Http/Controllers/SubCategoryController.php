@@ -11,7 +11,7 @@ class SubCategoryController extends Controller
     public function index()
     {
         $subcategories = SubCategory::latest()->paginate(4);
-        return view('admin.subcategory.index', compact('subcategories'));;
+        return view('admin.subcategory.index', compact('subcategories'));
     }
 
 
@@ -25,13 +25,14 @@ class SubCategoryController extends Controller
     {
 
         $request->validate([
-            'name'=>'required',
+            'name'=>'required|Unique:sub_categories',
             'category'=>'required'
         ]);
 
-        Subcategory::create(['name'=>$request->name,'categories_id'=>$request->category]);
+        Subcategory::create(['name'=>$request->name,'category_id'=>$request->category]);
         return redirect()->route('subCategories.index')->with('success','SubCategory is created successfully.');
     }
+
 
     public function show($id)
     {
@@ -50,7 +51,7 @@ class SubCategoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name'=>'required',
+            'name'=>'required|Unique:sub_categories',
             'category'=>'required'
         ]);
 

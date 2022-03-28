@@ -19,9 +19,9 @@ class CreateProductsTable extends Migration
             $table->string('image');
             $table->text('description');
             $table->decimal('price');
-            $table->integer('categories_id');
+            $table->integer('category_id');
             $table->integer('vendor_id');
-            $table->integer('sub_categories_id');
+            $table->integer('subCategory_id');
             //create foreignKey for product table
 
             // $table->foreignId('category_id')

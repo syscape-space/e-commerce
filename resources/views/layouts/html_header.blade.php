@@ -162,6 +162,10 @@
                         </li>
                     @endif
                 @else
+                    <li class="nav-item">
+                      <a class="nav-link" href="/notification">Notification</a>
+                    </li>
+
                     <li class="nav-item dropdown">
                         <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             {{ Auth::user()->name }}
@@ -179,6 +183,20 @@
                             </form>
                         </div>
                     </li>
+
+                    {{-- <li class="nav-item dropdown">
+                      <a id="navbarDropdown" class="nav-link dropdown-toggle" href="notification" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                          Notification
+                      </a> --}}
+                      
+                      {{-- <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                          @forelse ($user->notifications as $notification)
+                          <a class="dropdown-item">{{$notification->data['message'].$notification->data['name']}}</a>
+                          @empty
+                          <a class="dropdown-item">No record found</a>
+                          @endforelse
+                      </div> --}}
+                  </li>
                 @endguest
             </ul>
         </div>
