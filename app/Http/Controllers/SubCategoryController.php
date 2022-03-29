@@ -7,79 +7,90 @@ use Illuminate\Http\Request;
 
 class SubCategoryController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function index()
     {
-        //
+        $subcategories = SubCategory::latest()->paginate(4);
+        return view('admin.subcategory.index', compact('subcategories'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
     public function create()
     {
-        //
+         return view('admin.subcategory.create');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
+
     public function store(Request $request)
     {
-        //
+
+        $request->validate([
+            'name'=>'required|Unique:sub_categories',
+            'category'=>'required'
+        ]);
+
+        Subcategory::create(['name'=>$request->name,'category_id'=>$request->category]);
+        return redirect()->route('subCategories.index')->with('success','SubCategory is created successfully.');
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show(SubCategory $subcategory)
+
+    public function show($id)
     {
-        //
+
+        $subcategory = SubCategory::find($id);
+        return view('admin.subcategory.show',compact('subcategory'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(SubCategory $subcategory)
-    {
-        //
+    
+    public function edit($id)
+    { 
+        $subcategory = SubCategory::find($id);
+        return view('admin.subcategory.edit',compact('subcategory'));
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, SubCategory $subcategory)
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name'=>'required|Unique:sub_categories',
+            'category'=>'required'
+        ]);
+
+        $subcategory = SubCategory::find($id);
+        $subcategory->update(['name'=>$request->name,'categories_id'=>$request->category]);
+
+         return redirect()->route('subCategories.index')
+         ->with('success', 'SubCategory Is Updated Successfully'); 
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(SubCategory $subcategory)
+    public function destroy($id)
     {
-        //
+        //$subcategory->delete();
+        SubCategory::find($id)->first()->delete();
+        return redirect()->route('subCategories.index')->with('success', 'SubCategory Is Deleted Successfully');
+    }
+
+    public function trash()
+    {
+        $subcategories = SubCategory::onlyTrashed()->latest()->paginate(4);
+        return view('admin.subcategory.trash', compact('subcategories'));
+    }
+
+    //soft Delete
+    public function softdelete($id)
+    {
+        $subCategory = SubCategory::find($id)->delete();      
+         return redirect()->route('subCategories.index')->with('success', 'SubCategory Is Moved To Trash');
+    }
+    //Hard Delete
+    public function hardDelete($id)
+    {
+        $subCategory = SubCategory::onlyTrashed()->where('id',$id)->forcedelete();      
+         return redirect()->route('subCategories.trash')->with('success', 'SubCategory Is Deleted Successfully');        
+    }
+//Back from trash 
+    public function backFromTrash ($id)
+    {
+        $task = SubCategory::onlyTrashed()->where('id',$id)->first()->restore();      
+         return redirect()->route('subCategories.index')->with('success', 'SubCategory Is Backed Successfully');
     }
 }

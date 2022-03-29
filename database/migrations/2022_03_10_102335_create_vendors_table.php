@@ -18,10 +18,6 @@ class CreateVendorsTable extends Migration
             $table->string('name')->nullable();
             $table->string('email')->unique()->nullable();
             $table->string('phone_number')->nullable();
-            $table->text('address')->nullable();
-            $table->string('city', 50)->nullable();
-            $table->string('country', 50)->nullable();
-            $table->string('zipcode', 50)->nullable();
             $table->integer('is_active')->default('0');
             $table->integer('created_by')->default('0');
 

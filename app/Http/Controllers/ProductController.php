@@ -3,8 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Product;
+use App\Models\User;
+use App\Notifications\ProductNotification;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+
+
 
 class ProductController extends Controller
 {
@@ -25,8 +31,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $product=Product::all();
-        return view('products.index',$product);
+        $products = Product::latest()->paginate(4);
+        return view('admin.product.index', compact('products'));
     }
 
     /**
@@ -36,7 +42,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        return view('admin.product.create');
     }
 
     /**
@@ -47,18 +53,20 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $users=User::all();
         $this->validate($request,[
-            'name'=>'required|uniqe:products',
+            'name'=>'required|Unique:products',
             'description'=>'required',
             'price'=>'required|Numeric',
-            'image'=>'max:1999|image|nullable'
+            'image'=>'max:1999|image|nullable',
+            'category'=>'required',
         ]);
 
         //Handle file upload
         if($request->hasFile('image')){
             $file=$request->file('image');
-            $filename=md5(file_get_contents($file->getRealPath())) . $file->extension();
-            $path=$request->file('food_image')->storeAs('public/products_image',$filename);
+            $filename=md5(file_get_contents($file->getRealPath())) .'.'. $file->extension();
+            $path=$request->file('image')->storeAs('public/products_image',$filename);
 
         }else {
             $filename='noImage.jpg';
@@ -66,11 +74,14 @@ class ProductController extends Controller
         $product=new Product;
         $product->name=$request->input('name');
         $product->image=$filename;
-        $product->vendor_id=auth()->id;
+        $product->vendor_id=auth()->user()->id;
+        $product->category_id=$request->input('category');
+        $product->subCategory_id=1;
         $product->description=$request->input('description');
         $product->price=$request->input('price');
         $product->save();
-        return redirect('products')->with('success','product added successfuly');
+        Notification::send($users,new ProductNotification($request->name));
+        return redirect('products')->with('success','Product added successfuly');
     }
 
     /**
@@ -81,7 +92,7 @@ class ProductController extends Controller
      */
     public function show(Product $product)
     {
-        return view('products.show')->with('product',$product);
+        return view('admin.product.show')->with('product',$product);
     }
 
     /**
@@ -92,10 +103,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        if(auth()->id !== $product->vendor->id){
-            return redirect('/products/index')->with('error','You can not edit this product');
+        if(auth()->user()->id !== $product->vendor_id){
+            return redirect('/products')->with('error','You can not edit this product');
         }
-        return view('products.edit',$product);
+        return view('admin.product.edit')->with('product',$product);
     }
 
     /**
@@ -108,24 +119,27 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $this->validate($request,[
-            'name'=>'required|uniqe:products',
+            'name'=>'required',
             'description'=>'required',
             'price'=>'required|Numeric',
-            'image'=>'max:1999|image|nullable'
+            'image'=>'max:1999|image|nullable',
+            'category'=>'required',
         ]);
 
         //Handle file upload
         if($request->hasFile('image')){
             $file=$request->file('image');
-            $filename=md5(file_get_contents($file->getRealPath())) . $file->extension();
-            $path=$request->file('food_image')->storeAs('public/products_image',$filename);
+            $filename=md5(file_get_contents($file->getRealPath())) .'.'. $file->extension();
+            $path=$request->file('image')->storeAs('public/products_image',$filename);
 
         }else {
             $filename='noImage.jpg';
         }
         $product->name=$request->input('name');
         $product->image=$filename;
-        $product->vendor_id=auth()->id;
+        $product->vendor_id=auth()->user()->id;
+        $product->category_id=$request->input('category');
+        $product->subCategory_id=1;
         $product->description=$request->input('description');
         $product->price=$request->input('price');
         if($request->hasFile('image')){
@@ -150,5 +164,31 @@ class ProductController extends Controller
         $product->delete();
         $data=array('products'=>$product,'success'=>'Deleted successed');
         return redirect('products')->with($data);
+    }
+
+    //trash page
+    public function trash()
+    {
+        $products = Product::onlyTrashed()->latest()->paginate(4);
+        return view('admin.product.trash', compact('products'));
+    }
+
+    //soft Delete
+    public function softdelete($id)
+    {
+        $product = Product::find($id)->delete();
+         return redirect()->route('products.index')->with('success', 'Product Is Moved To Trash');
+    }
+    //Hard Delete
+    public function hardDelete($id)
+    {
+        $product = Product::onlyTrashed()->where('id',$id)->forcedelete();
+         return redirect()->route('products.trash')->with('success', 'Product Is Deleted Successfully');
+    }
+    //Back from trash
+    public function backFromTrash ($id)
+    {
+        $task = Product::onlyTrashed()->where('id',$id)->first()->restore();
+         return redirect()->route('products.index')->with('success', 'Product Is Back from trash Successfully');
     }
 }
