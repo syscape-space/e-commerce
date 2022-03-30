@@ -25,7 +25,7 @@
         <div class="col-xs-12 col-sm-12 col-md-12">
             <div class="form-group">
                 <strong>Image:</strong>
-                {{ $product->image }}         
+                <img src="../storage/products_image/{{$product->image}}" alt="" width="100">         
             </div>
         </div>
 
