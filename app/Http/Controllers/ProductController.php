@@ -77,7 +77,7 @@ class ProductController extends Controller
         $product->image=$filename;
         $product->vendor_id=auth()->user()->id;
         $product->category_id=$request->input('category');
-        $product->subCategory_id=1;
+        $product->subCategory_id=$request->input('subcategory');
         $product->description=$request->input('description');
         $product->price=$request->input('price');
         $product->save();
