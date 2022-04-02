@@ -11,7 +11,7 @@ use App\Http\Controllers\SubCategoryController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FrontProductListController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Livewire\Search;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,7 +46,6 @@ Route::get('/Dashboard', function () {
 });
 
 ####### end Frontend route #######
-
 
 
 //Notification Route
