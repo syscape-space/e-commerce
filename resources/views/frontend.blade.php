@@ -2,46 +2,68 @@
 
 @section('content')
 <div class="container">
-<main role="main">
 
 
-  <h2>Category</h2>
-   @foreach(App\Models\Category::all() as $cat)
-    <button class="btn btn-secondary">{{$cat->name}}</button>
-   @endforeach
+
+  <div class="card">
+    <div class="card-header">Search By Category</div>
+    <div class="card-body">
+      <a href="">
+        <button class="btn btn-secondary">test</button>
+      </a>
+      @foreach(App\Models\Category::all() as $cat)
+        <a href="{{route('product.category',$cat->name)}}"> 
+          <button class="btn btn-secondary">{{$cat->name}}</button>
+        </a>
+      @endforeach
+
+    </div>
+  </div>
+   
 
   <div class="album py-5 bg-light">
     <div class="container">
       <h2>Products</h2>
       <div class="row">
-        @foreach($products as $product)
-        <div class="col-md-4">
-          <div class="card mb-4 shadow-sm">
-            <img src="{{Storage::url($product->image)}}" height="200" style="width: 100%">
-            <div class="card-body">
-              <p><b>{{$product->name}}</b></p>
-              <p class="card-text">
-                {{Str::limit($product->description,120)}}
-              </p>
-              <div class="d-flex justify-content-between align-items-center">
-                <div class="btn-group">
-                  <a href="{{route('product.view',$product->id)}}"><button type="button" class="btn btn-sm btn-outline-success">View</button></a>
-                  <button type="button" class="btn btn-sm btn-outline-primary">Add to cart</button>
+
+          @forelse($products as $product)
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+              <img src="{{Storage::url($product->image)}}" height="200" style="width: 100%">
+              <div class="card-body">
+                <p><b>{{$product->name}}</b></p>
+                <p class="card-text">
+                  {{Str::limit($product->description,120)}}
+                </p>
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="btn-group">
+                    <a href="{{route('product.view',$product->id)}}"><button type="button" class="btn btn-sm btn-outline-success">View</button></a>
+                    <button type="button" class="btn btn-sm btn-outline-primary">Add to cart</button>
+                  </div>
+                  <small class="text-muted">{{$product->price}}</small>
                 </div>
-                <small class="text-muted">{{$product->price}}</small>
               </div>
             </div>
           </div>
-        </div>
-        @endforeach
+          @empty
+          <div class="col-md-4">
+            <div class="card mb-4 shadow-sm">
+              <div class="card-body">
+                <p><b>No products to show</b></p>
+              </div>
+            </div>
+          </div>
+          @endforelse
+
       </div>
     </div>
   </div>
 
   <div class="jumbotron">
+      <h2>You May like</h2>
+
       <div id="carouselExampleFade" class="carousel slide " data-ride="carousel">
         <div class="carousel-inner">
-
           <div class="carousel-item active">
            <div class="row">
             @foreach($randomActiveProducts as $product)
@@ -113,7 +135,6 @@
 
   </div>
 
-</main>
 <footer class="text-muted">
   <div class="container">
     <p class="float-right">
