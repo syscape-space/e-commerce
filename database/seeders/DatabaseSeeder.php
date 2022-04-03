@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
 
         Product::create([
             'name'=>'HP LAPTOPS ',
-            'image'=>'public/images/laptop.jpg',
+            'image'=>'laptop.jpg',
             'price'=> rand(700,1000),
             'description'=>'This is the description of a product',
             'category_id'=> 1,
@@ -67,7 +67,7 @@ class DatabaseSeeder extends Seeder
 
         Product::create([
             'name'=>'Dell LAPTOPS ',
-            'image'=>'public/images/laptop.jpg',
+            'image'=>'laptop.jpg',
             'price'=> rand(800,1000),
             'description'=>'This is the description of a product',
             'category_id'=> 1,
@@ -77,7 +77,7 @@ class DatabaseSeeder extends Seeder
 
         Product::create([
             'name'=>'LENOVO LAPTOPS ',
-            'image'=>'public/images/laptop.jpg',
+            'image'=>'laptop.jpg',
             'price'=> rand(700,1000),
             'description'=>'This is the description of a product',
             'category_id'=> 1,
@@ -86,7 +86,7 @@ class DatabaseSeeder extends Seeder
         ]);
         Product::create([
             'name'=>'Origin Book ',
-            'image'=>'public/images/book.jpg',
+            'image'=>'book.jpg',
             'price'=> rand(700,1000),
             'description'=>'This is the description of a product',
             'category_id'=> 3,
@@ -95,7 +95,7 @@ class DatabaseSeeder extends Seeder
         ]);
         Product::create([
             'name'=>'Samsung Mobile Phone ',
-            'image'=>'public/images/phone.png',
+            'image'=>'phone.png',
             'price'=> rand(700,1000),
             'description'=>'This is the description of a product',
             'category_id'=> 2,
