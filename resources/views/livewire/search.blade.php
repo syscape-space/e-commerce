@@ -15,7 +15,7 @@
                                 <div class="card-body">
                                     <p><b>{{ $product->name }}</b></p>
                                     <p class="card-text">
-                                        {{ Str::limit($product->description, 120) }}
+                                        {{ Str::limit($product->description, 30) }}
                                     </p>
                                     <div class="d-flex justify-content-between align-items-center">
                                         <div class="btn-group">
