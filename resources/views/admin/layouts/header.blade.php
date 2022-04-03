@@ -18,7 +18,7 @@
 
 
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.css" rel="stylesheet">
-
+@livewireStyles
 </head>
 
 <body id="page-top">

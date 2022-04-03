@@ -11,7 +11,7 @@ use App\Http\Controllers\SubCategoryController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FrontProductListController;
 use App\Http\Controllers\UserController;
-
+use App\Http\Livewire\Search;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,10 +43,19 @@ Route::get('/Dashboard', function () {
     return view('admin.layouts.main');
 });
 
+//list all user
+Route::get('/users', [UserController::class , 'list'] )->name('users.list');
 
+
+
+
+
+
+
+//Notification Route
+Route::get('/notification',[NotificationController::class,'productNotify']);
 
 // Admin route
-
 ########Categories########
 Route::resource('categories', CategoriesController::class);
 

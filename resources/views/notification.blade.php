@@ -1,4 +1,4 @@
-@extends('layouts.all_parts')
+@extends('admin.layouts.main')
 
 
   

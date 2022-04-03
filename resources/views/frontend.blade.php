@@ -1,6 +1,7 @@
 @extends('layout.app')
 
 @section('content')
+
 <div class="container">
 
 
@@ -16,6 +17,7 @@
           <button class="btn btn-secondary">{{$cat->name}}</button>
         </a>
       @endforeach
+      <livewire:search />
 
     </div>
   </div>
@@ -68,53 +70,60 @@
            <div class="row">
             @foreach($randomActiveProducts as $product)
             <div class="col-4">
-
               <div class="card mb-4 shadow-sm">
-                <img src="{{Storage::url($product->image)}}" height="200" style="width: 100%">
-                <div class="card-body">
-                  <p><b>{{$product->name}}</b></p>
-                  <p class="card-text">
-                    {{Str::limit($product->description,120)}}
-                  </p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <a href="{{route('product.view',$product->id)}}"><button type="button" class="btn btn-sm btn-outline-success">View</button></a>
-                      <button type="button" class="btn btn-sm btn-outline-primary">Add to cart</button>
-                    </div>
-                    <small class="text-muted">{{$product->price}}</small>
+                  <img src="{{ Storage::url($product->image) }}" height="200" style="width: 100%">
+                  <div class="card-body">
+                      <p><b>{{ $product->name }}</b></p>
+                      <p class="card-text">
+                          {{ Str::limit($product->description, 120) }}
+                      </p>
+                      <div class="d-flex justify-content-between align-items-center">
+                          <div class="btn-group">
+                              <a href="{{ route('product.view', $product->id) }}"><button
+                                      type="button"
+                                      class="btn btn-sm btn-outline-success">View</button></a>
+                              <button type="button" class="btn btn-sm btn-outline-primary">Add to
+                                  cart</button>
+                          </div>
+                          <small class="text-muted">{{ $product->price }}</small>
+                      </div>
                   </div>
-                </div>
               </div>
-            </div>
-            @endforeach
-           </div>
           </div>
+      @endforeach
+      </div>
+    </div>
 
-          <div class="carousel-item">
-            <div class="row">
-            @foreach($randomItemProducts as $product)
-              <div class="col-4">
-                <div class="card mb-4 shadow-sm">
-                <img src="{{Storage::url($product->image)}}" height="200" style="width: 100%">
-                <div class="card-body">
-                  <p><b>{{$product->name}}</b></p>
-                  <p class="card-text">
-                    {{Str::limit($product->description,120)}}
-                  </p>
-                  <div class="d-flex justify-content-between align-items-center">
-                    <div class="btn-group">
-                      <a href="{{route('product.view',[$product->id])}}"><button type="button" class="btn btn-sm btn-outline-success">View</button></a>
-                      <button type="button" class="btn btn-sm btn-outline-primary">Add to cart</button>
-                    </div>
-                    <small class="text-muted">{{$product->price}}</small>
+      <div class="carousel-item">
+          <div class="row">
+              @foreach ($randomItemProducts as $product)
+                  <div class="col-4">
+                      <div class="card mb-4 shadow-sm">
+                          <img src="{{ Storage::url($product->image) }}" height="200"
+                              style="width: 100%">
+                          <div class="card-body">
+                              <p><b>{{ $product->name }}</b></p>
+                              <p class="card-text">
+                                  {{ Str::limit($product->description, 120) }}
+                              </p>
+                              <div class="d-flex justify-content-between align-items-center">
+                                  <div class="btn-group">
+                                      <a href="{{ route('product.view', [$product->id]) }}"><button
+                                              type="button"
+                                              class="btn btn-sm btn-outline-success">View</button></a>
+                                      <button type="button" class="btn btn-sm btn-outline-primary">Add to
+                                          cart</button>
+                                  </div>
+                                  <small class="text-muted">{{ $product->price }}</small>
+                              </div>
+                          </div>
+                      </div>
                   </div>
-                </div>
-              </div>
-              </div>
               @endforeach
-           </div>
           </div>
-        </div>
+      </div>
+    </div>
+
         <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="sr-only">Previous</span>
@@ -123,16 +132,8 @@
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="sr-only">Next</span>
         </a>
-      </div>
-      <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-      </a>
-      <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-      </a>
 
+      </div>
   </div>
 
 <footer class="text-muted">
@@ -145,5 +146,6 @@
   </div>
 </footer>
 </div>
+
 
 @endsection
