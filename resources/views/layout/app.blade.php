@@ -45,6 +45,7 @@
                     <ul class="navbar-nav ml-auto">
                         @if (Auth::check())
                             <li class="nav-item"> <a class="nav-link" href="">Order</a></li>
+                            <li class="nav-item"> <a class="nav-link" href="{{route('notifications')}}">Notification</a></li>
                         @endif
 
 
@@ -52,13 +53,13 @@
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <span class="caret"> Menu </span>
+                                <span class="caret"> Categories </span>
                             </a>
 
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
                                 @foreach (App\Models\Category::all() as $category)
-                                    <a class="dropdown-item" href="">{{ $category->name }}
+                                    <a class="dropdown-item" href="{{route('product.category',$category->name)}}">{{ $category->name }}
                                     </a>
                                 @endforeach
 
