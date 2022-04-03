@@ -28,24 +28,70 @@ use App\Http\Livewire\Search;
 
 Auth::routes();
 
-Route::get('/home', [HomeController::class, 'index'])->name('home');
-
-
 ####### Frontend route #######
-
 Route::get('/', [FrontProductListController::class , 'index'] )->name('frontend');
 Route::get('/product/{id}', [FrontProductListController::class , 'show'] )->name('product.view');
-Route::get('/users', [UserController::class , 'list'] )->name('users.list');
+Route::get('/category/{name}', [FrontProductListController::class , 'allProduct'] )->name('product.category');
+
+####### end Frontend route #######
 
 
 
-
+Route::get('/home', [HomeController::class, 'index'])->name('home');
 
 Route::get('/Dashboard', function () {
     return view('admin.layouts.main');
 });
 
-####### end Frontend route #######
+//list all user
+Route::get('/users', [UserController::class , 'list'] )->name('users.list');
+
+
+
+// Admin route
+########Categories########
+Route::resource('categories', CategoriesController::class);
+
+Route::controller(CategoriesController::class)->group(function () {
+    Route::prefix('Categories')->group(function () {
+        Route::get('/soft/delete/{id}', 'softdelete')->name('categories.soft.delete');
+        Route::get('/hard/delete/{id}','hardDelete')->name('categories.hard.delete');
+        Route::get('/back/from/trash/{id}', 'backFromTrash')->name('categories.back');
+    });
+    Route::get('Categories.trash', 'trash')->name('categories.trash');
+});
+########End Categories########
+
+#### start subCategories route ####
+//resource
+Route::resource('subCategories',SubCategoryController::class);
+//softDelete route
+Route::get('subCategories/soft/delete/{id}', [SubCategoryController::class,'softdelete'])->name('subCategories.soft.delete');
+//hard route
+Route::get('subCategories/hard/delete/{id}', [SubCategoryController::class,'hardDelete'])->name('subCategories.hard.delete');
+//trash route
+Route::get('subCategories.trash', [SubCategoryController::class, 'trash'])->name('subCategories.trash');
+//Back from trash  route
+Route::get('subCategories/back/from/trash/{id}', [SubCategoryController::class, 'backFromTrash'])->name('subCategories.back');
+#### end subCategories route ####
+
+####### start Product route ###
+//resource
+Route::resource('products',ProductController::class);
+//softDelete route
+Route::get('products/soft/delete/{id}', [ProductController::class,'softdelete'])->name('products.soft.delete');
+//hard route
+Route::get('products/hard/delete/{id}', [ProductController::class,'hardDelete'])->name('products.hard.delete');
+//trash route
+Route::get('products.trash', [ProductController::class, 'trash'])->name('products.trash');
+//Back from trash  route
+Route::get('products/back/from/trash/{id}', [ProductController::class, 'backFromTrash'])->name('products.back');
+#### end products route ####
+
+####### start vendors route ####
+Route::resource('vendors', VendorController::class);
+####### start vendors route ######
+
 
 
 //Notification Route
@@ -63,58 +109,11 @@ Route::get('/mark.all.as.read.notification',[NotificationController::class,'toMa
 Route::get('/mark.all.as.un.read.notification',[NotificationController::class,'toMarkAllAsUnRead'])->name('markAllAsUnRead.notification');
 
 
-# ---------------------------- Categories routes -----------------------------------
-Route::resource('categories', CategoriesController::class);
-
-Route::controller(CategoriesController::class)->group(function () {
-    Route::prefix('Categories')->group(function () {
-        Route::get('/soft/delete/{id}', 'softdelete')->name('categories.soft.delete');
-        Route::get('/hard/delete/{id}','hardDelete')->name('categories.hard.delete');
-        Route::get('/back/from/trash/{id}', 'backFromTrash')->name('categories.back');
-    });
-    Route::get('Categories.trash', 'trash')->name('categories.trash');
-});
-
-
-#### start subCategories route ####
-//resource
-Route::resource('subCategories',SubCategoryController::class);
-//softDelete route
-Route::get('subCategories/soft/delete/{id}', [SubCategoryController::class,'softdelete'])->name('subCategories.soft.delete');
-//hard route
-Route::get('subCategories/hard/delete/{id}', [SubCategoryController::class,'hardDelete'])->name('subCategories.hard.delete');
-//trash route
-Route::get('subCategories.trash', [SubCategoryController::class, 'trash'])->name('subCategories.trash');
-//Back from trash  route
-Route::get('subCategories/back/from/trash/{id}', [SubCategoryController::class, 'backFromTrash'])->name('subCategories.back');
-#### end subCategories route ####
-
-
 ##################################### Send email to all users Route #############################
 Route::get('/send.email',[SendEmailNotificationController::class,'sendEmailToUsers'])->name('send.email');
 Route::post('/send.email.to.all.users',[SendEmailNotificationController::class,'sendEmailToAllUsers'])->name('send.email.to.all.users');
 ##################################33# start Product route ################################
 
-
-################################# start Product route ################################
-//resource
-Route::resource('products',ProductController::class);
-//softDelete route
-Route::get('products/soft/delete/{id}', [ProductController::class,'softdelete'])->name('products.soft.delete');
-//hard route
-Route::get('products/hard/delete/{id}', [ProductController::class,'hardDelete'])->name('products.hard.delete');
-//trash route
-Route::get('products.trash', [ProductController::class, 'trash'])->name('products.trash');
-//Back from trash  route
-Route::get('products/back/from/trash/{id}', [ProductController::class, 'backFromTrash'])->name('products.back');
-
-#### end products route ####
-
-################################# start vendors route ################################
-
-Route::resource('vendors', VendorController::class);
-
-################################# start vendors route ################################
 
 
 
