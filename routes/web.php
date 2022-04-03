@@ -11,6 +11,10 @@ use App\Http\Controllers\SubCategoryController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FrontProductListController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SocialController;
+use Laravel\Socialite\Facades\Socialite;
+use App\Http\Controllers\ShareSocialController; 
+
 
 
 /*
@@ -118,6 +122,13 @@ Route::resource('vendors', VendorController::class);
 ################################# start vendors route ################################
 
 
+
+############  Google Authentication Routes ###############################
+Route::get('auth/google', [SocialController::class, 'googleRedirect'])->name('google.login');
+Route::get('auth/google/callback', [SocialController::class, 'googleCallback']);
+
+
+  
 
 
 

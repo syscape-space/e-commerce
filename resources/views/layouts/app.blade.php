@@ -18,6 +18,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    <!---- google recaptcha  -->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+
 </head>
 <body>
     <div id="app">
@@ -44,6 +48,10 @@
                                 <li class="nav-item">
                                     <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                                 </li>
+                                <a href="{{ route('google.login') }}" class="nav-link">
+    Login With Google
+  </a>
+                              
                             @endif
                             
                             @if (Route::has('register'))

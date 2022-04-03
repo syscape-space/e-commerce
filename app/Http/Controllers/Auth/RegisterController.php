@@ -8,6 +8,8 @@ use App\Models\User;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
+use Session;
+
 
 class RegisterController extends Controller
 {
@@ -53,6 +55,20 @@ class RegisterController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
+            'g-recaptcha-response'=>function ($attribute,$value,$fail){
+              $secretkey= config('services.recaptcha.secret') ;
+              $response=$value;
+              $userID=$_SERVER['REMOTE_ADDR'];
+              $url="https://www.google.com/recaptcha/api/siteverify?secret=$secretkey&response=$response&remoteip=$userID";
+              $response=\file_get_contents($url);
+              $response=json_decode($response);
+             
+              if(!$response->success){
+                  Session::flash('g-reCaptcha-response','please check reCaptcha');
+                  Session::flash('alert-class','alert-danger');
+                  $fail($attribute.'google reCaptcha failed');
+              }
+            },
         ]);
     }
 
@@ -63,11 +79,13 @@ class RegisterController extends Controller
      * @return \App\Models\User
      */
     protected function create(array $data)
-    {
-        return User::create([
+    { 
+       
+          return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
         ]);
+        
     }
 }
