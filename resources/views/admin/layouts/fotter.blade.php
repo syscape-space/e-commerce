@@ -52,7 +52,7 @@
   </script>
 
 
-
+@livewireScripts
 </body>
 
 </html>
