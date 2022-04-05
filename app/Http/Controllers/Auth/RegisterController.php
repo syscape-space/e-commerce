@@ -57,21 +57,21 @@ class RegisterController extends Controller
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
             'g-recaptcha-response'=>function ($attribute,$value,$fail){
-              $secretkey= config('services.recaptcha.secret') ;
-              $response=$value;
-              $userID=$_SERVER['REMOTE_ADDR'];
-              $url="https://www.google.com/recaptcha/api/siteverify?secret=$secretkey&response=$response&remoteip=$userID";
-              $response=\file_get_contents($url);
-              $response=json_decode($response);
-             
-              if(!$response->success){
-                  Session::flash('g-reCaptcha-response','please check reCaptcha');
-                  Session::flash('alert-class','alert-danger');
-                  $fail($attribute.'google reCaptcha failed');
-              }
-            },
-        ]);
-    }
+                $secretkey= config('services.recaptcha.secret') ;
+                $response=$value;
+                $userID=$_SERVER['REMOTE_ADDR'];
+                $url="https://www.google.com/recaptcha/api/siteverify?secret=$secretkey&response=$response&remoteip=$userID";
+                $response=\file_get_contents($url);
+                $response=json_decode($response);
+               
+                if(!$response->success){
+                    Session::flash('g-reCaptcha-response','please check reCaptcha');
+                    Session::flash('alert-class','alert-danger');
+                    $fail($attribute.'google reCaptcha failed');
+                }
+              },
+          ]);
+      }
 
     /**
      * Create a new user instance after a valid registration.
