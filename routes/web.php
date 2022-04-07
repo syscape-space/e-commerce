@@ -123,7 +123,10 @@ Route::post('/send.email.to.all.users',[SendEmailNotificationController::class,'
 
 ############  Google Authentication Routes ###############################
 Route::get('auth/google', [SocialController::class, 'googleRedirect'])->name('google.login');
-Route::get('auth/google/callback', [SocialController::class, 'googleCallback']);
+Route::get('auth/google/Callback', [SocialController::class, 'Callback']);
+
+
+
 
 
   

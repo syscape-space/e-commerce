@@ -16,32 +16,31 @@ class SocialController extends Controller
     }
 
 
-    public function googleCallback()
-    {
+    public function Callback()
+    { 
         try {
-              $socialUser=Socialite::driver('google')->stateless()->user();
-             // dd($socialUser);
-              $user=User::where('google-id',$socialUser->id)->first();
-              dd($user);
-              if($user){ 
-                  dd('1');
+            $socialUser = Socialite::driver('google')->stateless()->user();
+           // dd($socialUser->id);
+            $user = User::where('google-id', $socialUser->id)->first();
+            //dd($user);
+            if ($user) {
                 Auth::login($user);
                 return redirect('/');
-               }  
-               else{
-               dd($user);
-                   $creatUser=User::create([
-                    'name'=>$socialUser->name,
-                    'email'=>$socialUser->email,
-                    'google-id'=>$socialUser->id,
-                    'password'=>bcrypt('password'),
-                   ]);
-                   Auth::login($creatUser);
-                   return redirect('/');
-               }
-            }catch(Exception $exception){
-                dd($exception->getMessage());
+            } else {
+                $createUser = User::create([
+                    'name' => $socialUser->name,
+                    'email' => $socialUser->email,
+                    'google-id' => $socialUser->id,
+                    'password' => encrypt('123456789')
+                ]);
+
+                Auth::login($createUser);
+                return redirect('/');
             }
+
+        } catch (Exception $exception) {
+            dd($exception->getMessage());
         }
+    }
     }
  
