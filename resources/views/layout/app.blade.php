@@ -17,6 +17,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css">
     <!---- google recaptcha  -->
     <script src="https://www.google.com/recaptcha/api.js" async defer></script> 
     @livewireStyles
@@ -43,12 +44,17 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         @if (Auth::check())
-                            <li class="nav-item"> <a class="nav-link" href="">Order</a></li>
-                            <li class="nav-item"> <a class="nav-link" href="{{route('notifications')}}">Notification</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link m-0 p-0" href="{{ route('cart.list') }}">
+                                <i class="fas fa-cart-arrow-down fa-2x"></i>
+                                Cart
+                                <div class="badge badge-danger">
+                                    {{ Cart::session(auth()->id())->getTotalQuantity()}}
+                                </div>
+                                
+                            </a>
+                            </li>
                         @endif
-
-
-
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
@@ -76,15 +82,18 @@
                                 </li>
                             @endif
                         @else
-                            <li class="nav-item dropdown">
-                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                    {{ Auth::user()->name }} <span class="caret"></span>
-                                </a>
 
-                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                        <li class="nav-item dropdown">
+                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                <span class="caret"> {{ Auth::user()->name }} </span>
+                            </a>
 
-                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+
+                                 <a class="dropdown-item" href="{{route('notifications')}}">Notification</a>
+                                 <a class="dropdown-item" href="">Order</a>
+                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
                                                          document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
@@ -93,8 +102,10 @@
                                         style="display: none;">
                                         @csrf
                                     </form>
-                                </div>
-                            </li>
+                            </div>
+                            
+                            
+                        </li>
                         @endguest
                     </ul>
                 </div>

@@ -21,8 +21,7 @@
                                         <div class="btn-group">
                                             <a href="{{ route('product.view', $product->id) }}"><button type="button"
                                                     class="btn btn-sm btn-outline-success">View</button></a>
-                                            <button type="button" class="btn btn-sm btn-outline-primary">Add to
-                                                cart</button>
+                                                    <a href="{{ route('cart.store', $product->id) }}" class="btn btn-sm btn-outline-primary">Add to cart</a>
                                         </div>
                                         <small class="text-muted">{{ $product->price }}</small>
                                     </div>

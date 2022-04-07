@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
@@ -126,7 +127,12 @@ Route::get('auth/google/callback', [SocialController::class, 'googleCallback']);
 
 
   
-
-
+################################## Cart Route #################################
+Route::get('cart', [CartController::class, 'cartList'])->name('cart.list')->middleware('auth');
+Route::get('cart/{id}', [CartController::class, 'addToCart'])->name('cart.store')->middleware('auth');
+Route::post('update-cart/{id}', [CartController::class, 'update'])->name('cart.update')->middleware('auth');
+Route::get('remove/{id}', [CartController::class, 'destroy'])->name('cart.remove')->middleware('auth');
+Route::get('clear', [CartController::class, 'clearAllCart'])->name('cart.clear');
+Route::get('checkout', [CartController::class, 'checkout'])->name('cart.checkout')->middleware('auth');
 
 
