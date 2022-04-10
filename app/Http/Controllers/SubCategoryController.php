@@ -7,6 +7,10 @@ use Illuminate\Http\Request;
 
 class SubCategoryController extends Controller
 {
+    public function __construct()
+    {
+       $this->middleware(['auth','Admin']);
+    }
 
     public function index()
     {
@@ -39,6 +43,11 @@ class SubCategoryController extends Controller
 
         $subcategory = SubCategory::find($id);
         return view('admin.subcategory.show',compact('subcategory'));
+    }
+    public function test()
+    {
+
+       dd('test');
     }
 
     

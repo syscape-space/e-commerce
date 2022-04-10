@@ -26,7 +26,20 @@ class HomeController extends Controller
      */
     public function index()
     {
+        /*
         $user=User::find(Auth::user()->id);
         return redirect()->route('frontend')->with('user', $user);
+        */
+
+        //dd(auth()->user()->role);
+        if(auth()->user()->role == 'admin'){
+            return redirect()->route('dashboard');
+        } 
+        return redirect()->route('frontend');
+        
+    }
+    public function dashboard()
+    {
+        return view('admin.layouts.main');
     }
 }
