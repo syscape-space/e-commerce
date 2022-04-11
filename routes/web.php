@@ -56,7 +56,7 @@ Route::controller(CategoriesController::class)->group(function () {
         Route::get('/soft/delete/{id}', 'softdelete')->name('categories.soft.delete');
         Route::get('/hard/delete/{id}','hardDelete')->name('categories.hard.delete');
         Route::get('/back/from/trash/{id}', 'backFromTrash')->name('categories.back');
-        Route::get('/trash', 'trash')->name('categories.trash');
+        Route::get('/trash/all', 'trash')->name('categories.trash');
 
     });
 });
@@ -74,11 +74,9 @@ Route::controller(SubCategoryController::class)->group(function () {
         Route::get('/hard/delete/{id}','hardDelete')->name('subCategories.hard.delete');
         //Back from trash  route
         Route::get('/back/from/trash/{id}', 'backFromTrash')->name('subCategories.back');
-    });
-    //trash route
-      //  Route::get('/trash',[SubCategoryController::class, 'trash'])->name('subCategories.trash');
-    //trash route
-        Route::get('/test',[SubCategoryController::class, 'trash'])->name('subCategories.trash');    
+        //trash route
+        Route::get('/trash/all','trash')->name('subCategories.trash');
+    });    
     
 });
 
@@ -96,9 +94,10 @@ Route::controller(ProductController::class)->group(function () {
         Route::get('/hard/delete/{id}', 'hardDelete')->name('products.hard.delete');
         //Back from trash  route
         Route::get('/back/from/trash/{id}',  'backFromTrash')->name('products.back');
+        //trash route
+        Route::get('/trash/all','trash')->name('products.trash');
     });
-    //trash route
-        Route::get('/trash',[ProductController::class, 'trash'])->name('products.trash');
+    
     
 });
 
