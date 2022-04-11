@@ -114,14 +114,9 @@ Route::post('/send.email.to.all.users',[SendEmailNotificationController::class,'
 ##################################33# start Product route ################################
 
 
-
-//Notification Route
-Route::get('/notification',[NotificationController::class,'productNotify']);
-
 ################################# Product Notification Route ##############################
     Route::get('/notification',[NotificationController::class,'productNotify'])->name('notifications');
-
-    Route::get('/seennotification',[NotificationController::class,'seenNotification'])->name('notifications.read');
+    Route::get('/seen/notification',[NotificationController::class,'seenNotification'])->name('notifications.read');
     Route::get('/notification.mark.as.read/{id}', [NotificationController::class,'toMarkAsRead'])->name('notifications.markasread');
     Route::get('/notification.mark.as.un.read/{id}', [NotificationController::class,'toMarkAsUnRead'])->name('notifications.markasunread');
     Route::get('/delete.all.notification',[NotificationController::class,'deleteAll'])->name('deleteAllNotification');
