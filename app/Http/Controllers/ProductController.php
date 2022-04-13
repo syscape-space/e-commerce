@@ -82,9 +82,9 @@ class ProductController extends Controller
         $product->is_acceptable=Null;
         $product->save();
 
-        $users=User::all();
-        $admins=User::where('role','admin')->get();
+        // $users=User::all();
         //Notification::send($users,new ProductNotification($request->name));
+        $admins=User::where('role','admin')->get();
         $msg = "There are new products need to accept" ;
         (new NotificationController)->sendNotification($admins , $msg);
         return redirect('products')->with('success','waiting for the admin approval');
@@ -224,7 +224,6 @@ class ProductController extends Controller
     public function declineProduct($product_id)
     {
         $product = Product::find($product_id);
-        //dd($product->vendor);
         if($product->is_acceptable == Null) {
             $product->delete();
             $this->hardDelete($product_id);

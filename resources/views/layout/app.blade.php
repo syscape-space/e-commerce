@@ -19,7 +19,7 @@
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.0/css/all.min.css">
     <!---- google recaptcha  -->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script> 
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     @livewireStyles
 </head>
 
@@ -44,15 +44,15 @@
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         @if (Auth::check())
-                        <li class="nav-item">
-                            <a class="nav-link m-0 p-0" href="{{ route('cart.list') }}">
-                                <i class="fas fa-cart-arrow-down fa-2x"></i>
-                                Cart
-                                <div class="badge badge-danger">
-                                    {{ Cart::session(auth()->id())->getTotalQuantity()}}
-                                </div>
-                                
-                            </a>
+                            <li class="nav-item">
+                                <a class="nav-link m-0 p-0" href="{{ route('cart.list') }}">
+                                    <i class="fas fa-cart-arrow-down fa-2x"></i>
+                                    Cart
+                                    <div class="badge badge-danger">
+                                        {{ Cart::session(auth()->id())->getContent()->count() }}
+                                    </div>
+
+                                </a>
                             </li>
                         @endif
                         <li class="nav-item dropdown">
@@ -64,7 +64,8 @@
                             <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
                                 @foreach (App\Models\Category::all() as $category)
-                                    <a class="dropdown-item" href="{{route('product.category',$category->name)}}">{{ $category->name }}
+                                    <a class="dropdown-item"
+                                        href="{{ route('product.category', $category->name) }}">{{ $category->name }}
                                     </a>
                                 @endforeach
 
@@ -82,19 +83,19 @@
                                 </li>
                             @endif
                         @else
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                                    <span class="caret"> {{ Auth::user()->name }} </span>
+                                </a>
 
-                        <li class="nav-item dropdown">
-                            <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <span class="caret"> {{ Auth::user()->name }} </span>
-                            </a>
+                                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
 
-                            <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
-
-                                 <a class="dropdown-item" href="{{route('notifications')}}">Notification</a>
-                                 <a class="dropdown-item" href="">Order</a>
-                                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                         document.getElementById('logout-form').submit();">
+                                    <a class="dropdown-item" href="{{ route('notifications') }}">Notification</a>
+                                    <a class="dropdown-item"
+                                        href="{{ route('user.orders', Auth::user()->id) }}">Order</a>
+                                    <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                                 document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 
@@ -102,10 +103,10 @@
                                         style="display: none;">
                                         @csrf
                                     </form>
-                            </div>
-                            
-                            
-                        </li>
+                                </div>
+
+
+                            </li>
                         @endguest
                     </ul>
                 </div>
@@ -117,7 +118,7 @@
             @yield('content')
         </main>
     </div>
-    
+
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     @livewireScripts

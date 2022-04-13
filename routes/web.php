@@ -11,6 +11,7 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\SubCategoryController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FrontProductListController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Livewire\Search;
 use App\Http\Controllers\SocialController;
@@ -134,6 +135,15 @@ Route::post('/send.email.to.all.users',[SendEmailNotificationController::class,'
     Route::get('checkout', [CartController::class, 'checkout'])->name('cart.checkout')->middleware('auth');
 ################################## end Cart Route #################################
 
+########################################### Order route ############################
+    Route::get('order/show/{id}',[OrderController::class,'userOrders'])->name('user.orders')->middleware('auth');
+    Route::get('order/delete/{id}',[OrderController::class,'deleteOrder'])->name('order.delete')->middleware('auth');
+    Route::get('order/delivered/{id}',[OrderController::class,'markOrderAsDelivered'])->name('order.delivered')->middleware('auth');
+    Route::post('order/store',[OrderController::class,'store'])->name('order')->middleware('auth');
+    Route::get('user/orders',[OrderController::class,'listOrdersToAccept'])->name('orders.accept.list')->middleware('auth','Admin');
+    Route::get('order/accept/{id}', [OrderController::class,'acceptOrder'])->name('order.accept')->middleware('auth','Admin');
+    Route::get('order/decline/{id}',[OrderController::class,'declineOrder'])->name('order.decline')->middleware('auth','Admin');
+######################### end order route ##########################
 
 
 ############  Google Authentication Routes ###############################
