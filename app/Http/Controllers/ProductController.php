@@ -21,7 +21,7 @@ class ProductController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth',['except'=>['index','show']]);
+       $this->middleware(['auth','Admin']);
     }
 
     /**
@@ -31,7 +31,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::latest()->paginate(4);
+        $products = Product::where('is_acceptable','!=', NULL)->latest()->paginate(4);
         return view('admin.product.index', compact('products'));
     }
 
@@ -53,7 +53,6 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        $users=User::all();
         $this->validate($request,[
             'name'=>'required|Unique:products',
             'description'=>'required',
@@ -80,9 +79,15 @@ class ProductController extends Controller
         $product->subCategory_id=$request->input('subcategory');
         $product->description=$request->input('description');
         $product->price=$request->input('price');
+        $product->is_acceptable=Null;
         $product->save();
-        Notification::send($users,new ProductNotification($request->name));
-        return redirect('products')->with('success','Product added successfuly');
+
+        // $users=User::all();
+        //Notification::send($users,new ProductNotification($request->name));
+        $admins=User::where('role','admin')->get();
+        $msg = "There are new products need to accept" ;
+        (new NotificationController)->sendNotification($admins , $msg);
+        return redirect('products')->with('success','waiting for the admin approval');
     }
 
     /**
@@ -192,5 +197,41 @@ class ProductController extends Controller
     {
         $task = Product::onlyTrashed()->where('id',$id)->first()->restore();
          return redirect()->route('products.index')->with('success', 'Product Is Back from trash Successfully');
+    }
+    public function listProductsToAccept ()
+    {
+        $products = Product::where('is_acceptable', Null)->get();
+        return view('admin.product.accept', compact('products'));
+
+    }
+
+    public function AcceptProduct($product_id)
+    {
+        $product = Product::find($product_id);
+        if($product->is_acceptable == Null) {
+            $product->is_acceptable = now();
+            $product->update();
+
+            $msg = "Your ".$product->name." product is approved successfully";
+            (new NotificationController)->sendNotification($product->vendor, $msg);
+            return redirect()->route('products.accept.list')->with('success', 'Product Is Accepted Successfully');
+
+        } else {
+            return redirect()->route('products.accept.list')->with('success', 'The Product Is already Accepted');
+        }
+    }
+
+    public function declineProduct($product_id)
+    {
+        $product = Product::find($product_id);
+        if($product->is_acceptable == Null) {
+            $product->delete();
+            $this->hardDelete($product_id);
+            $msg = "Your ".$product->name. " Product is declined";
+            (new NotificationController)->sendNotification($product->vendor, $msg);
+            return redirect()->route('products.accept.list')->with('success', 'Product Is Deleted Successfully');
+        } else {
+            return redirect()->route('products.accept.list')->with('success', 'The Product Is already Accepted');   
+        }   
     }
 }

@@ -26,6 +26,7 @@ class SocialController extends Controller
             if ($user) {
                 Auth::login($user);
                 return redirect('/');
+
             } else {
                 $createUser = User::create([
                     'name' => $socialUser->name,
@@ -36,6 +37,7 @@ class SocialController extends Controller
 
                 Auth::login($createUser);
                 return redirect('/');
+
             }
 
         } catch (Exception $exception) {

@@ -63,7 +63,9 @@
                     <ul>
                         <li>Total <span>${{ \Cart::session(auth()->id())->getTotal() }}</span></li>
                     </ul>
-                    <a class="btn btn-primary" href="{{ route('cart.checkout') }}">Proceed to checkout</a>
+                    @if (\Cart::session(auth()->id())->getTotal() != 0)
+                        <a class="btn btn-primary" href="{{ route('cart.checkout') }}">Proceed to checkout</a>
+                    @endif
                 </div>
             </div>
         </div>

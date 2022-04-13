@@ -16,7 +16,7 @@ class SendEmailNotificationController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(['auth','Admin']);
     }
     //send email to users page
     public function sendEmailToUsers(){

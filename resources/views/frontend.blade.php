@@ -2,7 +2,11 @@
 
 @section('content')
     <div class="container">
-
+        @if ($message = Session::get('success'))
+            <div class="alert alert-success">
+                <p>{{ $message }}</p>
+            </div>
+        @endif
 
 
         <div class="card">
@@ -34,7 +38,7 @@
                 @forelse($products as $product)
                     <div class="col-md-4">
                         <div class="card mb-4 shadow-sm">
-                            <img src="storage/products_image/{{$product->image}}" height="200" style="width: 100%">
+                            <img src="storage/products_image/{{ $product->image }}" height="200" style="width: 100%">
                             <div class="card-body">
                                 <p><b>{{ $product->name }}</b></p>
                                 <p class="card-text">
@@ -44,7 +48,8 @@
                                     <div class="btn-group">
                                         <a href="{{ route('product.view', $product->id) }}"><button type="button"
                                                 class="btn btn-sm btn-outline-success">View</button></a>
-                                        <a href="{{ route('cart.store', $product->id) }}" class="btn btn-sm btn-outline-primary">Add to cart</a>
+                                        <a href="{{ route('cart.store', $product->id) }}"
+                                            class="btn btn-sm btn-outline-primary">Add to cart</a>
                                     </div>
                                     <small class="text-muted">{{ $product->price }}</small>
                                 </div>
@@ -75,7 +80,8 @@
                         @foreach ($randomActiveProducts as $product)
                             <div class="col-4">
                                 <div class="card mb-4 shadow-sm">
-                                    <img src="storage/products_image/{{$product->image}}" height="200" style="width: 100%">
+                                    <img src="storage/products_image/{{ $product->image }}" height="200"
+                                        style="width: 100%">
                                     <div class="card-body">
                                         <p><b>{{ $product->name }}</b></p>
                                         <p class="card-text">
@@ -85,7 +91,8 @@
                                             <div class="btn-group">
                                                 <a href="{{ route('product.view', $product->id) }}"><button type="button"
                                                         class="btn btn-sm btn-outline-success">View</button></a>
-                                                        <a href="{{ route('cart.store', $product->id) }}" class="btn btn-sm btn-outline-primary">Add to cart</a>
+                                                <a href="{{ route('cart.store', $product->id) }}"
+                                                    class="btn btn-sm btn-outline-primary">Add to cart</a>
                                             </div>
                                             <small class="text-muted">{{ $product->price }}</small>
                                         </div>
@@ -101,7 +108,8 @@
                         @foreach ($randomItemProducts as $product)
                             <div class="col-4">
                                 <div class="card mb-4 shadow-sm">
-                                    <img src="storage/products_image/{{$product->image}}" height="200" style="width: 100%">
+                                    <img src="storage/products_image/{{ $product->image }}" height="200"
+                                        style="width: 100%">
                                     <div class="card-body">
                                         <p><b>{{ $product->name }}</b></p>
                                         <p class="card-text">
@@ -112,7 +120,8 @@
                                                 <a href="{{ route('product.view', [$product->id]) }}"><button
                                                         type="button"
                                                         class="btn btn-sm btn-outline-success">View</button></a>
-                                                        <a href="{{ route('cart.store', $product->id) }}" class="btn btn-sm btn-outline-primary">Add to cart</a>
+                                                <a href="{{ route('cart.store', $product->id) }}"
+                                                    class="btn btn-sm btn-outline-primary">Add to cart</a>
                                             </div>
                                             <small class="text-muted">{{ $product->price }}</small>
                                         </div>

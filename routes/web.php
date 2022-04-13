@@ -1,4 +1,4 @@
-<?php
+<?php 
 
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\Admin\HomeController;
@@ -11,6 +11,7 @@ use App\Http\Controllers\VendorController;
 use App\Http\Controllers\SubCategoryController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FrontProductListController;
+use App\Http\Controllers\OrderController;
 use App\Http\Controllers\UserController;
 use App\Http\Livewire\Search;
 use App\Http\Controllers\SocialController;
@@ -46,17 +47,12 @@ Auth::routes();
 
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+Route::get('/AdminDashbord', [HomeController::class, 'dashboard'])->name('dashboard');
 
-Route::get('/Dashboard', function () {
-    return view('admin.layouts.main');
-});
 
 //list all user
 Route::get('/users', [UserController::class , 'list'] )->name('users.list');
 
-
-
-// Admin route
 ########Categories########
     
 
@@ -70,8 +66,9 @@ Route::controller(CategoriesController::class)->group(function () {
         Route::get('/soft/delete/{id}', 'softdelete')->name('categories.soft.delete');
         Route::get('/hard/delete/{id}','hardDelete')->name('categories.hard.delete');
         Route::get('/back/from/trash/{id}', 'backFromTrash')->name('categories.back');
+        Route::get('/trash/all', 'trash')->name('categories.trash');
+
     });
-    Route::get('Categories.trash', 'trash')->name('categories.trash');
 });
 
 
@@ -85,28 +82,44 @@ Route::controller(CategoriesController::class)->group(function () {
 //resource
 
 Route::resource('subCategories',SubCategoryController::class);
-//softDelete route
-Route::get('subCategories/soft/delete/{id}', [SubCategoryController::class,'softdelete'])->name('subCategories.soft.delete');
-//hard route
-Route::get('subCategories/hard/delete/{id}', [SubCategoryController::class,'hardDelete'])->name('subCategories.hard.delete');
-//trash route
-Route::get('subCategories.trash', [SubCategoryController::class, 'trash'])->name('subCategories.trash');
-//Back from trash  route
-Route::get('subCategories/back/from/trash/{id}', [SubCategoryController::class, 'backFromTrash'])->name('subCategories.back');
+
+Route::controller(SubCategoryController::class)->group(function () {
+    Route::prefix('subCategories')->group(function () {
+        //softDelete route
+        Route::get('/soft/delete/{id}','softdelete')->name('subCategories.soft.delete');
+        //hard route
+        Route::get('/hard/delete/{id}','hardDelete')->name('subCategories.hard.delete');
+        //Back from trash  route
+        Route::get('/back/from/trash/{id}', 'backFromTrash')->name('subCategories.back');
+        //trash route
+        Route::get('/trash/all','trash')->name('subCategories.trash');
+    });    
+    
+});
+
 #### end subCategories route ####
 
 ####### start Product route ###
 //resource
 Route::resource('products',ProductController::class);
-//softDelete route
-Route::get('products/soft/delete/{id}', [ProductController::class,'softdelete'])->name('products.soft.delete');
-//hard route
-Route::get('products/hard/delete/{id}', [ProductController::class,'hardDelete'])->name('products.hard.delete');
-//trash route
-Route::get('products.trash', [ProductController::class, 'trash'])->name('products.trash');
-//Back from trash  route
-Route::get('products/back/from/trash/{id}', [ProductController::class, 'backFromTrash'])->name('products.back');
-#### end products route ####
+
+Route::controller(ProductController::class)->group(function () {
+    Route::prefix('products')->group(function () {
+        //softDelete route
+        Route::get('/soft/delete/{id}', 'softdelete')->name('products.soft.delete');
+        //hard route
+        Route::get('/hard/delete/{id}', 'hardDelete')->name('products.hard.delete');
+        //Back from trash  route
+        Route::get('/back/from/trash/{id}',  'backFromTrash')->name('products.back');
+        //trash route
+        Route::get('/trash/all','trash')->name('products.trash');
+        //accept product route
+        Route::get('/list/ToAccept', 'listProductsToAccept')->name('products.accept.list');
+        Route::get('/accept/{id}', 'AcceptProduct')->name('product.accept');
+        Route::get('/decline/{id}','declineProduct')->name('product.decline');
+    });     
+
+    });
 
 ####### start vendors route ####
 Route::group(['middleware' => ['role:administrator|vendor']], function () {
@@ -117,28 +130,40 @@ Route::get('categorie/create', [CategoriesController::class ,'create']);
 ####### start vendors route ######
 
 
-
-//Notification Route
-Route::get('/notification',[NotificationController::class,'productNotify']);
-
-//################################# Product Notification Route ##############################
-Route::get('/notification',[NotificationController::class,'productNotify'])->name('notifications');
-
-Route::get('/seennotification',[NotificationController::class,'seenNotification'])->name('notifications.read');
-Route::get('/notification.mark.as.read/{id}', [NotificationController::class,'toMarkAsRead'])->name('notifications.markasread');
-Route::get('/notification.mark.as.un.read/{id}', [NotificationController::class,'toMarkAsUnRead'])->name('notifications.markasunread');
-Route::get('/delete.all.notification',[NotificationController::class,'deleteAll'])->name('deleteAllNotification');
-Route::get('/delete.notification/{id}',[NotificationController::class,'delete'])->name('deleteNotification');
-Route::get('/mark.all.as.read.notification',[NotificationController::class,'toMarkAllAsRead'])->name('markAllAsRead.notification');
-Route::get('/mark.all.as.un.read.notification',[NotificationController::class,'toMarkAllAsUnRead'])->name('markAllAsUnRead.notification');
-
-
 ##################################### Send email to all users Route #############################
 Route::get('/send.email',[SendEmailNotificationController::class,'sendEmailToUsers'])->name('send.email');
 Route::post('/send.email.to.all.users',[SendEmailNotificationController::class,'sendEmailToAllUsers'])->name('send.email.to.all.users');
-##################################33# start Product route ################################
+
+################################# Product Notification Route ##############################
+    Route::get('/notification',[NotificationController::class,'productNotify'])->name('notifications');
+    Route::get('/seen/notification',[NotificationController::class,'seenNotification'])->name('notifications.read');
+    Route::get('/notification.mark.as.read/{id}', [NotificationController::class,'toMarkAsRead'])->name('notifications.markasread');
+    Route::get('/notification.mark.as.un.read/{id}', [NotificationController::class,'toMarkAsUnRead'])->name('notifications.markasunread');
+    Route::get('/delete.all.notification',[NotificationController::class,'deleteAll'])->name('deleteAllNotification');
+    Route::get('/delete.notification/{id}',[NotificationController::class,'delete'])->name('deleteNotification');
+    Route::get('/mark.all.as.read.notification',[NotificationController::class,'toMarkAllAsRead'])->name('markAllAsRead.notification');
+    Route::get('/mark.all.as.un.read.notification',[NotificationController::class,'toMarkAllAsUnRead'])->name('markAllAsUnRead.notification');
+################################# end Product Notification Route ##############################
 
 
+################################## Cart Route #################################
+    Route::get('cart', [CartController::class, 'cartList'])->name('cart.list')->middleware('auth');
+    Route::get('cart/{id}', [CartController::class, 'addToCart'])->name('cart.store')->middleware('auth');
+    Route::post('update-cart/{id}', [CartController::class, 'update'])->name('cart.update')->middleware('auth');
+    Route::get('remove/{id}', [CartController::class, 'destroy'])->name('cart.remove')->middleware('auth');
+    Route::get('clear', [CartController::class, 'clearAllCart'])->name('cart.clear');
+    Route::get('checkout', [CartController::class, 'checkout'])->name('cart.checkout')->middleware('auth');
+################################## end Cart Route #################################
+
+########################################### Order route ############################
+    Route::get('order/show/{id}',[OrderController::class,'userOrders'])->name('user.orders')->middleware('auth');
+    Route::get('order/delete/{id}',[OrderController::class,'deleteOrder'])->name('order.delete')->middleware('auth');
+    Route::get('order/delivered/{id}',[OrderController::class,'markOrderAsDelivered'])->name('order.delivered')->middleware('auth');
+    Route::post('order/store',[OrderController::class,'store'])->name('order')->middleware('auth');
+    Route::get('user/orders',[OrderController::class,'listOrdersToAccept'])->name('orders.accept.list')->middleware('auth','Admin');
+    Route::get('order/accept/{id}', [OrderController::class,'acceptOrder'])->name('order.accept')->middleware('auth','Admin');
+    Route::get('order/decline/{id}',[OrderController::class,'declineOrder'])->name('order.decline')->middleware('auth','Admin');
+######################### end order route ##########################
 
 
 ############  Google Authentication Routes ###############################
@@ -150,6 +175,7 @@ Route::get('auth/google/Callback', [SocialController::class, 'Callback']);
 
 
 
+<<<<<<< HEAD
 ################################## Cart Route #################################
 
 
@@ -159,6 +185,13 @@ Route::post('update-cart/{id}', [CartController::class, 'update'])->name('cart.u
 Route::get('remove/{id}', [CartController::class, 'destroy'])->name('cart.remove')->middleware('auth');
 Route::get('clear', [CartController::class, 'clearAllCart'])->name('cart.clear');
 Route::get('checkout', [CartController::class, 'checkout'])->name('cart.checkout')->middleware('auth');
+=======
+
+
+
+  
+
+>>>>>>> 625fc30a22bd15bf33c90b7effdc28abdd1cc87a
 
 ############## laratrust/roles/permission route ##############################
 
