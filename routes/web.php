@@ -16,7 +16,9 @@ use App\Http\Livewire\Search;
 use App\Http\Controllers\SocialController;
  use Laravel\Socialite\Facades\Socialite;
  use App\Http\Controllers\ShareSocialController;
-
+ use App\Http\Controllers\UsersController;
+ use App\Http\Controllers\RoleController;
+ use App\Http\Controllers\PermissionController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -33,9 +35,11 @@ use App\Http\Controllers\SocialController;
 Auth::routes();
 
 ####### Frontend route #######
-Route::get('/', [FrontProductListController::class , 'index'] )->name('frontend');
-Route::get('/product/{id}', [FrontProductListController::class , 'show'] )->name('product.view');
-Route::get('/category/{name}', [FrontProductListController::class , 'allProduct'] )->name('product.category');
+
+
+    Route::get('/', [FrontProductListController::class , 'index'] )->name('frontend');
+    Route::get('/product/{id}', [FrontProductListController::class , 'show'] )->name('product.view');
+    Route::get('/category/{name}', [FrontProductListController::class , 'allProduct'] )->name('product.category');
 
 ####### end Frontend route #######
 
@@ -54,20 +58,32 @@ Route::get('/users', [UserController::class , 'list'] )->name('users.list');
 
 // Admin route
 ########Categories########
+    
+
+
+
 Route::resource('categories', CategoriesController::class);
 
 Route::controller(CategoriesController::class)->group(function () {
     Route::prefix('Categories')->group(function () {
+        Route::get('/soft/delete/{id}', 'softdelete')->name('categories.soft.delete');
         Route::get('/soft/delete/{id}', 'softdelete')->name('categories.soft.delete');
         Route::get('/hard/delete/{id}','hardDelete')->name('categories.hard.delete');
         Route::get('/back/from/trash/{id}', 'backFromTrash')->name('categories.back');
     });
     Route::get('Categories.trash', 'trash')->name('categories.trash');
 });
+
+
 ########End Categories########
+
+
+
+
 
 #### start subCategories route ####
 //resource
+
 Route::resource('subCategories',SubCategoryController::class);
 //softDelete route
 Route::get('subCategories/soft/delete/{id}', [SubCategoryController::class,'softdelete'])->name('subCategories.soft.delete');
@@ -93,7 +109,11 @@ Route::get('products/back/from/trash/{id}', [ProductController::class, 'backFrom
 #### end products route ####
 
 ####### start vendors route ####
+Route::group(['middleware' => ['role:administrator|vendor']], function () {
+
 Route::resource('vendors', VendorController::class);
+Route::get('categorie/create', [CategoriesController::class ,'create']);
+});
 ####### start vendors route ######
 
 
@@ -129,8 +149,10 @@ Route::get('auth/google/Callback', [SocialController::class, 'Callback']);
 
 
 
-  
+
 ################################## Cart Route #################################
+
+
 Route::get('cart', [CartController::class, 'cartList'])->name('cart.list')->middleware('auth');
 Route::get('cart/{id}', [CartController::class, 'addToCart'])->name('cart.store')->middleware('auth');
 Route::post('update-cart/{id}', [CartController::class, 'update'])->name('cart.update')->middleware('auth');
@@ -138,4 +160,11 @@ Route::get('remove/{id}', [CartController::class, 'destroy'])->name('cart.remove
 Route::get('clear', [CartController::class, 'clearAllCart'])->name('cart.clear');
 Route::get('checkout', [CartController::class, 'checkout'])->name('cart.checkout')->middleware('auth');
 
+############## laratrust/roles/permission route ##############################
 
+Route::group(['middleware' => ['role:superadministrator|administrator']], function () {
+    Route::resource('users', 'UsersController');
+    Route::resource('permission', 'PermissionController');
+    Route::resource('roles', 'RoleController');
+    });
+ ############# end  route ##############################

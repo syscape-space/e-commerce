@@ -27,6 +27,7 @@ class DatabaseSeeder extends Seeder
         \App\Models\Product::factory(10)->create();
         \App\Models\Vendor::factory(10)->create();
         */
+        $this->Call(LaraTrustSeeder::class);
 
         Category::create([
             'name'=>'laptop ',
@@ -108,14 +109,38 @@ class DatabaseSeeder extends Seeder
             'phone_number'=> '6666',
             'is_active'=>1,
         ]);
-        User::create([
-            'name'=>'Admin',
+       
+           User::create([
+            'name'=>'admin',
             'email'=>'admin@gmail.com',
             'password'=>bcrypt('123456'),
             'email_verified_at'=>NOW(),
             'address'=>'Syria',
             'phone'=>'0000',
-        ]);
+            'role'=>'admin'
+        ])->attachRole('administrator')->attachPermission('users-create');
+
+        User::create([
+            'name'=>'vendor',
+            'email'=>'vendor@gmail.com',
+            'password'=>bcrypt('123456'),
+            'email_verified_at'=>NOW(),
+            'address'=>'Syria',
+            'phone'=>'0000',
+            'role'=>'vendor'
+        ])->attachRole('vendor')->attachPermission('categories-create');
+        
+        User::create([
+            'name'=>'user',
+            'email'=>'user@gmail.com',
+            'password'=>bcrypt('123456'),
+            'email_verified_at'=>NOW(),
+            'address'=>'Syria',
+            'phone'=>'0000',
+            'role'=>'user'
+        ])->attachRole('user');
+
+        
     }
     
 }
