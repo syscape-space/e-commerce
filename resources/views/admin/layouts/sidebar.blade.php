@@ -63,6 +63,8 @@
             <a class="collapse-item" href="{{route('products.index')}}">View</a>
             <a class="collapse-item" href="{{route('products.create')}}">Create</a>
             <a class="collapse-item" href="{{route('products.trash')}}">Trash</a>
+            <a class="collapse-item" href="{{route('products.accept.list')}}">Accept</a>
+
           </div>
         </div>
       </li>

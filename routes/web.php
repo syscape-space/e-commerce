@@ -96,11 +96,13 @@ Route::controller(ProductController::class)->group(function () {
         Route::get('/back/from/trash/{id}',  'backFromTrash')->name('products.back');
         //trash route
         Route::get('/trash/all','trash')->name('products.trash');
+        //accept product route
+        Route::get('/list/ToAccept', 'listProductsToAccept')->name('products.accept.list');
+        Route::get('/accept/{id}', 'AcceptProduct')->name('product.accept');
+        Route::get('/decline/{id}','declineProduct')->name('product.decline');
+    });     
+
     });
-    
-    
-});
-#### end products route ####
 
 ####### start vendors route ####
 Route::resource('vendors', VendorController::class);

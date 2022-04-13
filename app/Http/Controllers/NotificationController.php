@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Notifications\DatabaseNotification;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\generalNotifications;
+
 use Illuminate\Support\Facades\Auth;
 
 class NotificationController extends Controller
@@ -67,6 +70,14 @@ class NotificationController extends Controller
         $notification=DatabaseNotification::where('notifiable_id',Auth::user()->id);
         $notification->delete();
         return redirect('/notification')->with('success','all notification has been removed');
+    }
+
+     public function sendNotification($reciver , $message) 
+    {  
+        $sender = User::where('id',Auth::id())->first();  
+        //$reciver->notify(new generalNotifications($sender,$message));
+        Notification::send($reciver,new generalNotifications($sender,$message));
+
     }
 
 }

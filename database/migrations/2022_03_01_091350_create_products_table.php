@@ -22,6 +22,8 @@ class CreateProductsTable extends Migration
             $table->integer('category_id');
             $table->integer('vendor_id');
             $table->integer('subCategory_id');
+            $table->timestamp('is_acceptable')->nullable()->useCurrent();
+
             //create foreignKey for product table
 
             // $table->foreignId('category_id')
