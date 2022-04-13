@@ -100,7 +100,6 @@ Route::controller(ProductController::class)->group(function () {
     
     
 });
-
 #### end products route ####
 
 ####### start vendors route ####
@@ -111,8 +110,6 @@ Route::resource('vendors', VendorController::class);
 ##################################### Send email to all users Route #############################
 Route::get('/send.email',[SendEmailNotificationController::class,'sendEmailToUsers'])->name('send.email');
 Route::post('/send.email.to.all.users',[SendEmailNotificationController::class,'sendEmailToAllUsers'])->name('send.email.to.all.users');
-##################################33# start Product route ################################
-
 
 ################################# Product Notification Route ##############################
     Route::get('/notification',[NotificationController::class,'productNotify'])->name('notifications');
