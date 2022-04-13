@@ -96,10 +96,13 @@ Route::controller(ProductController::class)->group(function () {
         Route::get('/hard/delete/{id}', 'hardDelete')->name('products.hard.delete');
         //Back from trash  route
         Route::get('/back/from/trash/{id}',  'backFromTrash')->name('products.back');
+        Route::get('/list/ToAccept',[ProductController::class, 'listProductsToAccept'])->name('products.accept.list');
+        Route::get('/accept/{id}',[ProductController::class, 'AcceptProduct'])->name('product.accept');
+        Route::get('/decline/{id}',[ProductController::class, 'declineProduct'])->name('product.decline');
+
     });
     //trash route
         Route::get('/trash',[ProductController::class, 'trash'])->name('products.trash');
-    
 });
 
 #### end products route ####
