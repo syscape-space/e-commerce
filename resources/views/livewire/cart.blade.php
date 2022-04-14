@@ -51,9 +51,11 @@
                             </table>
                         </div>
                     </div>
+                    @if(Cart::session(auth()->id())->getTotal()!=0)
                     <div class="p-2">
                         <a class="btn btn-danger" href="{{ route('cart.clear') }}">Delete all list</a>
                     </div>
+                    @endif
                 </div>
             </div>
 

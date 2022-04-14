@@ -135,14 +135,16 @@ Route::get('/send.email',[SendEmailNotificationController::class,'sendEmailToUse
 Route::post('/send.email.to.all.users',[SendEmailNotificationController::class,'sendEmailToAllUsers'])->name('send.email.to.all.users');
 
 ################################# Product Notification Route ##############################
-    Route::get('/notification',[NotificationController::class,'productNotify'])->name('notifications');
-    Route::get('/seen/notification',[NotificationController::class,'seenNotification'])->name('notifications.read');
-    Route::get('/notification.mark.as.read/{id}', [NotificationController::class,'toMarkAsRead'])->name('notifications.markasread');
-    Route::get('/notification.mark.as.un.read/{id}', [NotificationController::class,'toMarkAsUnRead'])->name('notifications.markasunread');
+    Route::get('/notification',[NotificationController::class,'productNotify'])->name('notifications')->middleware('auth');
+    Route::get('/notification/adminNotification',[NotificationController::class,'adminNotification'])->name('admin.notifications')->middleware('auth','Admin');
+    Route::get('/seen/notification',[NotificationController::class,'seenNotification'])->name('notifications.read')->middleware('auth');
+    Route::get('/seen/admin/notification',[NotificationController::class,'seenAdminNotification'])->name('notifications.read.admin')->middleware('auth','Admin');
+    Route::get('/notification.mark.as.read/{id}', [NotificationController::class,'toMarkAsRead'])->name('notifications.markasread')->middleware('auth');
+    Route::get('/notification.mark.as.un.read/{id}', [NotificationController::class,'toMarkAsUnRead'])->name('notifications.markasunread')->middleware('auth');
     Route::get('/delete.all.notification',[NotificationController::class,'deleteAll'])->name('deleteAllNotification');
     Route::get('/delete.notification/{id}',[NotificationController::class,'delete'])->name('deleteNotification');
-    Route::get('/mark.all.as.read.notification',[NotificationController::class,'toMarkAllAsRead'])->name('markAllAsRead.notification');
-    Route::get('/mark.all.as.un.read.notification',[NotificationController::class,'toMarkAllAsUnRead'])->name('markAllAsUnRead.notification');
+    Route::get('/mark.all.as.read.notification',[NotificationController::class,'toMarkAllAsRead'])->name('markAllAsRead.notification')->middleware('auth');
+    Route::get('/mark.all.as.un.read.notification',[NotificationController::class,'toMarkAllAsUnRead'])->name('markAllAsUnRead.notification')->middleware('auth');
 ################################# end Product Notification Route ##############################
 
 

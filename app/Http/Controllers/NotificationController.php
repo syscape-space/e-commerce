@@ -80,4 +80,15 @@ class NotificationController extends Controller
 
     }
 
+    //Admin notification
+    public function adminNotification(){
+        $users=User::find(Auth::user()->id);
+        return view('admin.notification')->with('users',$users);
+    }
+
+    //seen admin notification
+    public function seenAdminNotification(){
+        $users=User::find(Auth::user()->id);
+        return view('admin.seennotification')->with('users',$users);
+    }
 }

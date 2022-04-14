@@ -14,7 +14,7 @@
     <div class="col-lg-12 margin-tb">
         <div class="pull-left">
             <h2>Notification </h2>
-            <a href="{{ route('notifications.read') }}" style="float: right;" class="btn btn-primary mb-2">Seen notification</a>
+            <a href="{{ route('notifications.read.admin') }}" style="float: right;" class="btn btn-primary mb-2">Seen notification</a>
         </div>
     </div>
 
