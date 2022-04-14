@@ -175,7 +175,6 @@ Route::get('auth/google/Callback', [SocialController::class, 'Callback']);
 
 
 
-<<<<<<< HEAD
 ################################## Cart Route #################################
 
 
@@ -185,19 +184,12 @@ Route::post('update-cart/{id}', [CartController::class, 'update'])->name('cart.u
 Route::get('remove/{id}', [CartController::class, 'destroy'])->name('cart.remove')->middleware('auth');
 Route::get('clear', [CartController::class, 'clearAllCart'])->name('cart.clear');
 Route::get('checkout', [CartController::class, 'checkout'])->name('cart.checkout')->middleware('auth');
-=======
-
-
-
-  
-
->>>>>>> 625fc30a22bd15bf33c90b7effdc28abdd1cc87a
 
 ############## laratrust/roles/permission route ##############################
 
-Route::group(['middleware' => ['role:superadministrator|administrator']], function () {
-    Route::resource('users', 'UsersController');
-    Route::resource('permission', 'PermissionController');
-    Route::resource('roles', 'RoleController');
-    });
+// Route::group(['middleware' => ['role:superadministrator|administrator']], function () {
+//     Route::resource('users', 'UsersController');
+//     Route::resource('permission', 'PermissionController');
+//     Route::resource('roles', 'RoleController');
+//     });
  ############# end  route ##############################

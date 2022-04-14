@@ -34,39 +34,6 @@
                 </div>
             </div>
         </li>
-<<<<<<< HEAD
-          <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap4"
-          aria-expanded="true" aria-controls="collapseBootstrap4">
-          <i class="far fa-fw fa-window-maximize"></i>
-          <span>Users</span>
-        </a>
-        <div id="collapseBootstrap4" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Users </h6>
-           
-            
-           
-          </div>
-        </div>
-      </li>
-                <li class="nav-item">
-        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap5"
-          aria-expanded="true" aria-controls="collapseBootstrap5">
-          <i class="far fa-fw fa-window-maximize"></i>
-          <span>User Order</span>
-        </a>
-        <div id="collapseBootstrap5" class="collapse" aria-labelledby="headingBootstrap" data-parent="#accordionSidebar">
-          <div class="bg-white py-2 collapse-inner rounded">
-            <h6 class="collapse-header">Order </h6>
-            <a class="collapse-item" href="">View</a>
-           
-           
-          </div>
-        </div>
-      </li>
-=======
->>>>>>> 625fc30a22bd15bf33c90b7effdc28abdd1cc87a
 
         <li class="nav-item">
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap1"

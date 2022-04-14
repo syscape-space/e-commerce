@@ -46,7 +46,6 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-<<<<<<< HEAD
     public function roles()
     {
         return $this->belongsToMany(Role::class);
@@ -55,9 +54,5 @@ class User extends Authenticatable
     public function permissions()
     {
         return $this->belongsToMany(Permission::class);
-=======
-    public function orders(){
-        return $this->hasMany(Order::class,'order_id');
->>>>>>> 625fc30a22bd15bf33c90b7effdc28abdd1cc87a
     }
 }
