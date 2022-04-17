@@ -58,7 +58,7 @@ class OrderController extends Controller
     //show all orders to accept
     public function listOrdersToAccept(){
         $orders = Order::where('status', 'pending')->get();
-        return view('admin.order.userOrder')->with('orders',$orders);
+        return view('admin.order.purchaseOrder')->with('orders',$orders);
     }
 
     // Acceppt orders

@@ -1,5 +1,5 @@
     <ul class="navbar-nav sidebar sidebar-light accordion" id="accordionSidebar">
-        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('/auth/dashboard') }}">
+        <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ url('AdminDashbord') }}">
             <div class="sidebar-brand-icon">
                 Laravel
                 <!--    <img src="{{ asset('admin/img/logo/logo2.png') }}"> -->
@@ -8,7 +8,7 @@
         </a>
         <hr class="sidebar-divider my-0">
         <li class="nav-item active">
-            <a class="nav-link" href="{{ url('/auth/dashboard') }}">
+            <a class="nav-link" href="{{ url('AdminDashbord') }}">
                 <i class="fas fa-fw fa-tachometer-alt"></i>
                 <span>Dashboard</span></a>
         </li>
@@ -114,9 +114,8 @@
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Order </h6>
-                    <a class="collapse-item" href="{{ route('orders.accept.list') }}">View</a>
-
-
+                    <a class="collapse-item" href="{{ route('products.accept.list') }}">Product order</a>
+                    <a class="collapse-item" href="{{ route('orders.accept.list') }}">Purchase order</a>
                 </div>
             </div>
         </li>

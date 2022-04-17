@@ -20,6 +20,8 @@ use App\Http\Controllers\SocialController;
  use App\Http\Controllers\UsersController;
  use App\Http\Controllers\RoleController;
  use App\Http\Controllers\PermissionController;
+use Darryldecode\Cart\CartCondition;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -123,9 +125,8 @@ Route::controller(ProductController::class)->group(function () {
 
 ####### start vendors route ####
 Route::group(['middleware' => ['role:administrator|vendor']], function () {
-
-Route::resource('vendors', VendorController::class);
-Route::get('categorie/create', [CategoriesController::class ,'create']);
+    Route::resource('vendors', VendorController::class);
+    Route::get('categorie/create', [CategoriesController::class ,'create']);
 });
 ####### start vendors route ######
 
@@ -135,36 +136,51 @@ Route::get('/send.email',[SendEmailNotificationController::class,'sendEmailToUse
 Route::post('/send.email.to.all.users',[SendEmailNotificationController::class,'sendEmailToAllUsers'])->name('send.email.to.all.users');
 
 ################################# Product Notification Route ##############################
-    Route::get('/notification',[NotificationController::class,'productNotify'])->name('notifications')->middleware('auth');
-    Route::get('/notification/adminNotification',[NotificationController::class,'adminNotification'])->name('admin.notifications')->middleware('auth','Admin');
-    Route::get('/seen/notification',[NotificationController::class,'seenNotification'])->name('notifications.read')->middleware('auth');
-    Route::get('/seen/admin/notification',[NotificationController::class,'seenAdminNotification'])->name('notifications.read.admin')->middleware('auth','Admin');
-    Route::get('/notification.mark.as.read/{id}', [NotificationController::class,'toMarkAsRead'])->name('notifications.markasread')->middleware('auth');
-    Route::get('/notification.mark.as.un.read/{id}', [NotificationController::class,'toMarkAsUnRead'])->name('notifications.markasunread')->middleware('auth');
-    Route::get('/delete.all.notification',[NotificationController::class,'deleteAll'])->name('deleteAllNotification');
-    Route::get('/delete.notification/{id}',[NotificationController::class,'delete'])->name('deleteNotification');
-    Route::get('/mark.all.as.read.notification',[NotificationController::class,'toMarkAllAsRead'])->name('markAllAsRead.notification')->middleware('auth');
-    Route::get('/mark.all.as.un.read.notification',[NotificationController::class,'toMarkAllAsUnRead'])->name('markAllAsUnRead.notification')->middleware('auth');
+Route::controller(NotificationController::class)->group(function(){
+    Route::prefix('admin')->middleware('auth','Admin')->group(function(){
+        Route::get('/notification.Notification','adminNotification')->name('admin.notifications'); 
+        Route::get('/notification.markasread/{id}', 'adminToMarkAsRead')->name('notifications.admin.markasread');
+        Route::get('/notification.markasunread/{id}', 'adminToMarkAsUnRead')->name('notifications.admin.markasunread');
+        Route::get('/delete.all.notification','adminDeleteAll')->name('adminDeleteAllNotification');
+        Route::get('/delete.notification/{id}','deleteAdmin')->name('admin.deleteNotification');
+        Route::get('/markAllAsRead.notification','adminToMarkAllAsRead')->name('admin.markAllAsRead.notification');
+        Route::get('/markAllAsUnRead.notification','adminToMarkAllAsUnRead')->name('admin.markAllAsUnRead.notification');
+    });
+    Route::get('/notification','productNotify')->name('notifications')->middleware('auth');
+    Route::get('/seen/notification','seenNotification')->name('notifications.read')->middleware('auth');
+    Route::get('/notification.markasread/{id}', 'toMarkAsRead')->name('notifications.markasread')->middleware('auth');
+    Route::get('/notification.markasunread/{id}', 'toMarkAsUnRead')->name('notifications.markasunread')->middleware('auth');
+    Route::get('/delete.all.notification','deleteAll')->name('deleteAllNotification')->middleware('auth');
+    Route::get('/delete.notification/{id}','delete')->name('deleteNotification')->middleware('auth');
+    Route::get('/markallAsRead.notification','toMarkAllAsRead')->name('markAllAsRead.notification')->middleware('auth');
+    Route::get('/markAllAsUnRead.notification','toMarkAllAsUnRead')->name('markAllAsUnRead.notification')->middleware('auth');
+});
+Route::get('/seen/notification/admin',[NotificationController::class,'seenAdminNotification'])->name('notifications.read.admin')->middleware('auth','Admin');
 ################################# end Product Notification Route ##############################
 
 
 ################################## Cart Route #################################
-    Route::get('cart', [CartController::class, 'cartList'])->name('cart.list')->middleware('auth');
-    Route::get('cart/{id}', [CartController::class, 'addToCart'])->name('cart.store')->middleware('auth');
-    Route::post('update-cart/{id}', [CartController::class, 'update'])->name('cart.update')->middleware('auth');
-    Route::get('remove/{id}', [CartController::class, 'destroy'])->name('cart.remove')->middleware('auth');
-    Route::get('clear', [CartController::class, 'clearAllCart'])->name('cart.clear');
-    Route::get('checkout', [CartController::class, 'checkout'])->name('cart.checkout')->middleware('auth');
+Route::controller(CartController::class)->group(function(){
+    Route::get('cart', 'cartList')->name('cart.list')->middleware('auth');
+    Route::get('cart/{id}', 'addToCart')->name('cart.store')->middleware('auth');
+    Route::post('update-cart/{id}', 'update')->name('cart.update')->middleware('auth');
+    Route::get('remove/{id}', 'destroy')->name('cart.remove')->middleware('auth');
+    Route::get('clear', 'clearAllCart')->name('cart.clear')->middleware('auth');
+    Route::get('checkout', 'checkout')->name('cart.checkout')->middleware('auth');
+});
 ################################## end Cart Route #################################
 
 ########################################### Order route ############################
-    Route::get('order/show/{id}',[OrderController::class,'userOrders'])->name('user.orders')->middleware('auth');
-    Route::get('order/delete/{id}',[OrderController::class,'deleteOrder'])->name('order.delete')->middleware('auth');
-    Route::get('order/delivered/{id}',[OrderController::class,'markOrderAsDelivered'])->name('order.delivered')->middleware('auth');
-    Route::post('order/store',[OrderController::class,'store'])->name('order')->middleware('auth');
-    Route::get('user/orders',[OrderController::class,'listOrdersToAccept'])->name('orders.accept.list')->middleware('auth','Admin');
-    Route::get('order/accept/{id}', [OrderController::class,'acceptOrder'])->name('order.accept')->middleware('auth','Admin');
-    Route::get('order/decline/{id}',[OrderController::class,'declineOrder'])->name('order.decline')->middleware('auth','Admin');
+Route::controller(OrderController::class)->group(function(){
+    Route::get('order/show/{id}','userOrders')->name('user.orders')->middleware('auth');
+    Route::get('order/delete/{id}','deleteOrder')->name('order.delete')->middleware('auth');
+    Route::get('order/delivered/{id}','markOrderAsDelivered')->name('order.delivered')->middleware('auth');
+    Route::post('order/store','store')->name('order')->middleware('auth');
+    Route::get('user/orders','listOrdersToAccept')->name('orders.accept.list')->middleware('auth','Admin');
+    Route::get('order/accept/{id}', 'acceptOrder')->name('order.accept')->middleware('auth','Admin');
+    Route::get('order/decline/{id}','declineOrder')->name('order.decline')->middleware('auth','Admin');
+});
+    
 ######################### end order route ##########################
 
 

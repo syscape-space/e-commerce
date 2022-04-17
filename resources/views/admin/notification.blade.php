@@ -37,8 +37,8 @@
         <td>{{ $key+1}}</td>
         <td>{{ $notification->data['message']}}</td>
         <td>
-            <a class="btn btn-success" href="{{ route('notifications.markasread',$notification->id) }}">mark as read</a>
-            <a href="{{ route('deleteNotification',$notification->id)}}" class="btn btn-danger">Delete</a>
+            <a class="btn btn-success" href="{{ route('notifications.admin.markasread',$notification->id) }}">mark as read</a>
+            <a href="{{ route('admin.deleteNotification',$notification->id)}}" class="btn btn-danger">Delete</a>
 
         </td>
         @endif
@@ -50,7 +50,7 @@
     @endforelse
 </table>
 <div>        
-    <a href="{{route('markAllAsRead.notification')}}" class="btn btn-warning ml-2">Mark all as read</a>
-    <a href="{{route('deleteAllNotification')}}" class="btn btn-danger pull-right">Delete all</a>
+    <a href="{{route('admin.markAllAsRead.notification')}}" class="btn btn-warning ml-2">Mark all as read</a>
+    <a href="{{route('adminDeleteAllNotification')}}" class="btn btn-danger pull-right">Delete all</a>
 </div>
 @endsection

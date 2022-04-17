@@ -1,8 +1,5 @@
 @extends('admin.layouts.main')
 
-
-  
-
 @section('content')
 
 <div class="row">
@@ -41,11 +38,10 @@
     <tr>
         @if ($notification->read_at!==Null)
         <td>{{ $key+1}}</td>
-        <td>{{ $notification->data['message'].$notification->data['name'] }}</td>
+        <td>{{ $notification->data['message'] }}</td>
         <td>
-            <a class="btn btn-info" href="{{ route('products.show',$notification->data['product_id']) }}">Show</a>
-            <a href="{{ route('notifications.markasunread',$notification->id)}}" class="btn btn-warning">Mark as un read</a>
-            <a href="{{ route('deleteNotification',$notification->id)}}" class="btn btn-danger">Delete</a>
+            <a href="{{ route('notifications.admin.markasunread',$notification->id)}}" class="btn btn-warning">Mark as un read</a>
+            <a href="{{ route('admin.deleteNotification',$notification->id)}}" class="btn btn-danger">Delete</a>
         </td>
         @endif
         
@@ -55,6 +51,6 @@
         
     @endforelse
 </table>
-    <a href="{{route('markAllAsUnRead.notification')}}" class="btn btn-warning ml-2">Mark all as unread</a>
-    <a href="{{route('deleteAllNotification')}}" class="btn btn-danger pull-right">Delete all</a>
+    <a href="{{route('admin.markAllAsUnRead.notification')}}" class="btn btn-warning ml-2">Mark all as unread</a>
+    <a href="{{route('adminDeleteAllNotification')}}" class="btn btn-danger pull-right">Delete all</a>
 @endsection

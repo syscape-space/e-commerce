@@ -17,6 +17,7 @@
                             <table class="table align-items-center table-flush">
                                 <thead class="thead-light">
                                     <tr>
+                                        <th>Image</th>
                                         <th>Name</th>
                                         <th>Quantity</th>
                                         <th>Price</th>
@@ -28,7 +29,8 @@
                                     @if (count($cartItems) > 0)
                                         @foreach ($cartItems as $key => $item)
                                             <tr>
-                                                <td>{{ $item['name'] }}</td>
+                                                <td><img src="/storage/products_image/{{$item['attributes']['image'] }}" width="40" ></td>
+                                                <td>{{$item['name']}}</td>
                                                 <td>
                                                     <livewire:cart-update-form :item="$item" :key="$item['id']" />
                                                 </td>

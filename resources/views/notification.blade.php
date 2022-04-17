@@ -10,6 +10,13 @@
 
 
             <div class="row">
+
+                <div class="col-lg-12 margin-tb">
+                    <div class="pull-left">
+                        <h2>Notification </h2>
+                        <a href="{{ route('notifications.read') }}" style="float: right;" class="btn btn-primary mb-2">Seen notification</a>
+                    </div>
+                </div>
                 <div class="col-lg-12 mb-4">
                     <!-- Simple Tables -->
                     <div class="card">
