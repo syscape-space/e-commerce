@@ -9,7 +9,8 @@ use App\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Auth;
 use DB;
-
+use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\DB as FacadesDB;
 
 class UserController extends Controller
   {
@@ -215,7 +216,7 @@ class UserController extends Controller
         
                 $user->update($input);
         
-                DB::table('model_has_roles')->where('model_id',$id)->delete();
+                FacadesDB::table('model_has_roles')->where('model_id',$id)->delete();
         
             
         

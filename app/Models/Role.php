@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Laratrust\Models\LaratrustRole;
-use App\Models\Role;
 
 class Role extends LaratrustRole
 {

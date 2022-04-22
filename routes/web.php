@@ -57,10 +57,6 @@ Route::get('/VendorDashbord', [HomeController::class, 'vendorDashboard'])->name(
 Route::resource('users', UserController::class);
 Route::controller(UserController::class)->group(function () {
     Route::prefix('users')->group(function () {
-        Route::get('/users', 'index')->name('user.index');
-        Route::get('/users/create', 'create')->name('user.create');
-        Route::get('/users/show/{id}','show')->name('user.show');
-        Route::get('/users/edit/{id}', 'edit')->name('user.edit');
         Route::get('/trash/all','destroy')->name('user.trash');
         Route::get('/back/from/trash/{id}', 'backFromTrash')->name('user.back');
 

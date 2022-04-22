@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
         SubCategory::create(['name'=>'sony','category_id'=>2]);
         SubCategory::create(['name'=>'novel','category_id'=>3]);
 
-        Brand::create(['name'=>'ahmad shop','logo'=>'logo.jpg','vendor_id'=>2]);
+        Brand::create(['name'=>'ahmad shop','logo'=>'logo.jpg','vendor_id'=>4]);
 
 
         Product::create([
@@ -68,7 +68,7 @@ class DatabaseSeeder extends Seeder
             'category_id'=> 1,
             'subCategory_id'=>2,
             'brand_id'=>1,
-            'vendor_id'=>2
+            'vendor_id'=>4
         ]);
 
         Product::create([
@@ -79,7 +79,7 @@ class DatabaseSeeder extends Seeder
             'category_id'=> 1,
             'subCategory_id'=>1,
             'brand_id'=>1,
-            'vendor_id'=>2
+            'vendor_id'=>4
         ]);
 
         Product::create([
@@ -90,7 +90,7 @@ class DatabaseSeeder extends Seeder
             'category_id'=> 1,
             'subCategory_id'=>3,
             'brand_id'=>1,
-            'vendor_id'=>2
+            'vendor_id'=>4
         ]);
         Product::create([
             'name'=>'Origin Book ',
@@ -100,7 +100,7 @@ class DatabaseSeeder extends Seeder
             'category_id'=> 3,
             'subCategory_id'=>6,
             'brand_id'=>1,
-            'vendor_id'=>2
+            'vendor_id'=>4
         ]);
         Product::create([
             'name'=>'Samsung Mobile Phone ',
@@ -110,7 +110,7 @@ class DatabaseSeeder extends Seeder
             'category_id'=> 2,
             'subCategory_id'=>4,
             'brand_id'=>1,
-            'vendor_id'=>2
+            'vendor_id'=>4
         ]);
        
          
