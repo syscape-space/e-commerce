@@ -3,10 +3,18 @@
 namespace App\Models;
 
 use Laratrust\Models\LaratrustRole;
+use App\Models\Role;
 
 class Role extends LaratrustRole
 {
     public $guarded = [];
+
+protected $fillable = [
+        'name',
+        'display_name',
+        'description',
+        
+    ];
 
 
     public function users()

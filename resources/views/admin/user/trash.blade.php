@@ -4,7 +4,7 @@
 
         <div class="container-fluid" id="container-wrapper">
           <div class="d-sm-flex align-items-center justify-content-between mb-4">
-            <h1 class="h3 mb-0 text-gray-800">user</h1>
+            <h1 class="h3 mb-0 text-gray-800">users</h1>
             <ol class="breadcrumb">
               <li class="breadcrumb-item"><a href="./">Home</a></li>
               <li class="breadcrumb-item">user</li>
@@ -23,7 +23,7 @@
               <!-- Simple Tables -->
               <div class="card">
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                  <h6 class="m-0 font-weight-bold text-primary">All Trashed user </h6>
+                  <h6 class="m-0 font-weight-bold text-primary">All Trashed Users </h6>
                 </div>
                 <div class="table-responsive">
                   <table class="table align-items-center table-flush">
@@ -37,15 +37,13 @@
                     </thead>
                     <tbody>
                       @if(count($user)>0)
-                      @foreach($users as $key=> $user)
+                      @foreach($user as $key=> $user)
                       <tr>
 
                         <td><a href="#">{{$key+1}}</a></td>
                         <td>{{$user->name}}</td>
-                        <td>{{$user->users->email}}</td>
                         <td>
-                          <a class="btn btn-primary" href="{{ route('uaers.back',$user->id)}}">Back</a>
-                          <a class="btn btn-danger" href="{{ route('users.hard.delete',$user->id)}}">Delelte</a>
+                          <a class="btn btn-primary" href="{{ route('user.back',$user->id)}}">Back</a>
                            
                         </td>
 
@@ -53,7 +51,7 @@
                       @endforeach
 
                       @else
-                      <td>No user moved to trash yet!</td>
+                      <td>No category moved to trash yet!</td>
                       @endif
                       
                     </tbody>

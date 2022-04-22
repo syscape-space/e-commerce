@@ -164,7 +164,7 @@ return [
         Laravel\Socialite\SocialiteServiceProvider::class,
         Darryldecode\Cart\CartServiceProvider::class,
         Laratrust\LaratrustServiceProvider::class,
-
+       
 
 
         /*
@@ -234,7 +234,7 @@ return [
         'Socialite' => Laravel\Socialite\Facades\Socialite::class,
         'Cart' => Darryldecode\Cart\Facades\CartFacade::class,
         'Laratrust' => Laratrust\LaratrustFacades::class,
-      
+        
     ],
 
 ];

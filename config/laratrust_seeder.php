@@ -12,27 +12,7 @@ return [
     'truncate_tables' => true,
 
     'roles_structure' => [
-        'superadministrator' => [
-            'users' => 'c,r,u,d',
-            'categories' => 'c,r,u,d',
-            'product' => 'c,r,u,d',
-            'payments' => 'c,r,u,d',
-            'profile' => 'r,u'
-        ],
-        'administrator' => [
-            'users' => 'c,r,u,d',
-            'categories' => 'c,r,u,d',
-            'product' => 'c,r,u,d',
-            'payments' => 'c,r,u,d',
-            'profile' => 'r,u'
-        ],
-        'user' => [
-            'profile' => 'r,u',
-        ],
-        'vendor' => [
-            'product' => 'c,r,u,d',
-            'categories' => 'c,r,u,d',
-        ]
+       
     ],
 
     'permissions_map' => [
