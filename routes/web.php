@@ -17,7 +17,6 @@ use App\Http\Livewire\Search;
 use App\Http\Controllers\SocialController;
  use Laravel\Socialite\Facades\Socialite;
  use App\Http\Controllers\ShareSocialController;
- use App\Http\Controllers\UsersController;
  use App\Http\Controllers\RoleController;
  use App\Http\Controllers\PermissionController;
 use Darryldecode\Cart\CartCondition;
@@ -52,13 +51,24 @@ Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/AdminDashbord', [HomeController::class, 'dashboard'])->name('dashboard');
 
 
-//list all user
-Route::get('/users', [UserController::class , 'list'] )->name('users.list');
+##########    list all user  #######################
 
-########Categories########
-    
+Route::resource('users', UserController::class);
+Route::controller(UserController::class)->group(function () {
+    Route::prefix('users')->group(function () {
+        Route::get('/users', 'index')->name('user.index');
+        Route::get('/users/create', 'create')->name('user.create');
+        Route::get('/users/show/{id}','show')->name('user.show');
+        Route::get('/users/edit/{id}', 'edit')->name('user.edit');
+        Route::get('/trash/all','destroy')->name('user.trash');
+        Route::get('/back/from/trash/{id}', 'backFromTrash')->name('user.back');
+
+    });
+});
 
 
+
+########Categories######   
 
 Route::resource('categories', CategoriesController::class);
 
@@ -205,9 +215,9 @@ Route::get('checkout', [CartController::class, 'checkout'])->name('cart.checkout
 
 ############## laratrust/roles/permission route ##############################
 
-// Route::group(['middleware' => ['role:superadministrator|administrator']], function () {
-//     Route::resource('users', 'UsersController');
-//     Route::resource('permission', 'PermissionController');
-//     Route::resource('roles', 'RoleController');
-//     });
+ Route::group(['middleware' => ['role:superadministrator|administrator']], function () {
+     
+     Route::resource('permission', 'PermissionController');
+     Route::resource('roles', 'RoleController');
+    });
  ############# end  route ##############################

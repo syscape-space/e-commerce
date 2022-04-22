@@ -94,12 +94,13 @@
                 <i class="far fa-fw fa-window-maximize"></i>
                 <span>Users</span>
             </a>
+        @if (auth()->user()->hasrole('administrator'))
             <div id="collapseBootstrap4" class="collapse" aria-labelledby="headingBootstrap"
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Users </h6>
-                    <a class="collapse-item" href="{{ route('users.list') }}">View all users</a>
-
+                    <a class="collapse-item" href="{{ url('/'. ($page ='users')) }}">View all users</a>
+        @endif
 
                 </div>
             </div>

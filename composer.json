@@ -19,6 +19,7 @@
         "laravel/socialite": "^5.5",
         "laravel/tinker": "^2.5",
         "laravel/ui": "^3.2",
+        "laravelcollective/html": "^6.3",
         "livewire/livewire": "^2.10",
         "santigarcor/laratrust": "^7.1",
         "socialiteproviders/google": "^4.1"
