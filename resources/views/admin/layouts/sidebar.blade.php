@@ -64,7 +64,6 @@
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Products </h6>
                     <a class="collapse-item" href="{{ route('products.index') }}">View</a>
-                    <a class="collapse-item" href="{{ route('products.create') }}">Create</a>
                     <a class="collapse-item" href="{{ route('products.trash') }}">Trash</a>
                     <a class="collapse-item" href="{{ route('products.accept.list') }}">Accept</a>
 
@@ -75,14 +74,14 @@
             <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap3"
                 aria-expanded="true" aria-controls="collapseBootstrap3">
                 <i class="far fa-fw fa-window-maximize"></i>
-                <span>Slider</span>
+                <span>Brand</span>
             </a>
             <div id="collapseBootstrap3" class="collapse" aria-labelledby="headingBootstrap"
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
-                    <h6 class="collapse-header">Slider </h6>
-                    <a class="collapse-item" href="">View</a>
-                    <a class="collapse-item" href="">Create</a>
+                    <h6 class="collapse-header">Brand </h6>
+                    <a class="collapse-item" href="{{route('brand.index')}}">View all Brands</a>
+                    <a class="collapse-item" href="{{route('brand.trash')}}">Trash</a>
 
                 </div>
             </div>

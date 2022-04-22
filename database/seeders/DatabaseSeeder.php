@@ -1,6 +1,8 @@
 <?php
 
 namespace Database\Seeders;
+
+use App\Models\Brand;
 use App\Models\Category;
 use App\Models\SubCategory;
 use App\Models\Product;
@@ -53,7 +55,7 @@ class DatabaseSeeder extends Seeder
         SubCategory::create(['name'=>'sony','category_id'=>2]);
         SubCategory::create(['name'=>'novel','category_id'=>3]);
 
-
+        Brand::create(['name'=>'ahmad shop','logo'=>'logo.jpg','vendor_id'=>2]);
 
 
         Product::create([
@@ -63,7 +65,8 @@ class DatabaseSeeder extends Seeder
             'description'=>'This is the description of a product',
             'category_id'=> 1,
             'subCategory_id'=>2,
-            'vendor_id'=>1
+            'brand_id'=>1,
+            'vendor_id'=>2
         ]);
 
         Product::create([
@@ -73,7 +76,8 @@ class DatabaseSeeder extends Seeder
             'description'=>'This is the description of a product',
             'category_id'=> 1,
             'subCategory_id'=>1,
-            'vendor_id'=>1
+            'brand_id'=>1,
+            'vendor_id'=>2
         ]);
 
         Product::create([
@@ -83,7 +87,8 @@ class DatabaseSeeder extends Seeder
             'description'=>'This is the description of a product',
             'category_id'=> 1,
             'subCategory_id'=>3,
-            'vendor_id'=>1
+            'brand_id'=>1,
+            'vendor_id'=>2
         ]);
         Product::create([
             'name'=>'Origin Book ',
@@ -92,7 +97,8 @@ class DatabaseSeeder extends Seeder
             'description'=>'This is the description of a product',
             'category_id'=> 3,
             'subCategory_id'=>6,
-            'vendor_id'=>1
+            'brand_id'=>1,
+            'vendor_id'=>2
         ]);
         Product::create([
             'name'=>'Samsung Mobile Phone ',
@@ -101,13 +107,8 @@ class DatabaseSeeder extends Seeder
             'description'=>'This is the description of a product',
             'category_id'=> 2,
             'subCategory_id'=>4,
-            'vendor_id'=>1
-        ]);
-        Vendor::create([
-            'name'=>'vendor1 ',
-            'email'=>'vendor1@gmail.com',
-            'phone_number'=> '6666',
-            'is_active'=>1,
+            'brand_id'=>1,
+            'vendor_id'=>2
         ]);
        
            User::create([

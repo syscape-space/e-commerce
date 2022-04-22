@@ -62,7 +62,7 @@ class Kernel extends HttpKernel
         'signed' => \Illuminate\Routing\Middleware\ValidateSignature::class,
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
-        'Admin'=>\Illuminate\Http\Middleware\SetCacheHeaders::class,
+        'Admin'=>\App\Http\Middleware\Admin::class,
         'role'=>Laratrust\Middleware\LaratrustRole::class,
         'permission'=>Laratrust\Middleware\LaratrustPermission::class,
         'ability'=>Laratrust\Middleware\LaratrustAbility::class,

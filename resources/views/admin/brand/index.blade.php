@@ -3,10 +3,10 @@
 
 @section('content')
     <div class="d-sm-flex align-items-center justify-content-between mb-4">
-      <h1 class="h3 mb-0 ml-4 text-gray-800">Product</h1>
+      <h1 class="h3 mb-0 ml-4 text-gray-800">Brand</h1>
       <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="./">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Products</li>
+        <li class="breadcrumb-item active" aria-current="page">brands</li>
         <li class="breadcrumb-item active" aria-current="page">View</li>
 
       </ol>
@@ -23,47 +23,42 @@
       <!-- Simple Tables -->
       <div class="card">
         <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-          <h6 class="m-0 font-weight-bold text-primary">All Products</h6>
+          <h6 class="m-0 font-weight-bold text-primary">All Brands</h6>
         </div>
         <div class="table-responsive">
           <table class="table align-items-center table-flush">
             <thead class="thead-light">
               <tr>
                 <th>SN</th>                
-                <th>Image</th>
+                <th>logo</th>
                 <th>Name</th>
-                <th>Description</th>
-                <th>Price</th>
-                <th>Category</th>
                 <th>Vendor</th>
-                <th>Actions</th>
-                        
+                <th>Products count</th>
+                <th>Action</th>  
               </tr>
             </thead>
                     
             <tbody>
-              @if(count($products)>0)
-              @foreach($products as $key=> $product)
+              @if(count($brands)>0)
+              @foreach($brands as $key=> $brand)
               <tr>
                 <td><a href="#">{{$key+1}}</a></td>
                 <td>
-                  <img src="storage/products_image/{{$product->image}}" width="100">
+                  <img src="/storage/brands_logo/{{$brand->logo}}" width="100">
                 </td>
-                <td>{{$product->name}}</td>
-                <td>{!!  $product->description !!}</td>
-                <td>${{$product->price}}</td>
-                <td>{{$product->category->name}}</td>
-                <td>{{$product->brand->name}}</td>
-                <td>
-                  <a class="btn btn-info" href="{{ route('products.show',$product->id) }}">Show</a>
-                  <a href="{{ route('products.soft.delete',$product->id)}}" class="btn btn-warning">SoftDelete</a>
+                <td>{{$brand->name}}</td>
+                <td>{{$brand->vendor->name}}</td>
+                <td>{{$brand->products->count()}}
+                </td>
+                <td><a href="{{ route('brand.soft.delete',$brand->id)}}" class="btn btn-danger">Delete</a>
+                  <a class="btn btn-info" href="{{ route('brand.show',$brand->id) }}">Show</a>
                 </td>
 
                  
               </tr>
               @endforeach
               @else
-              <td>No product created yet!</td>
+              <td>No brand created yet!</td>
               @endif
             
 
@@ -72,5 +67,5 @@
         </div>
       </div>
     </div>
-    {!! $products->links() !!}
+
  @endsection

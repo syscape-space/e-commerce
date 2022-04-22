@@ -12,7 +12,7 @@ class Product extends Model
     use SoftDeletes;
     
     protected $fillable = [
-        'name','image','description','price','vendor_id','category_id','subCategory_id',
+        'name','image','description','price','vendor_id','brand_id','category_id','subCategory_id',
     ];
 
 
@@ -28,6 +28,11 @@ class Product extends Model
 
     // every product belongs to one vendor
     public function vendor(){
-        return $this->belongsTo(Vendor::class,'vendor_id');
+        return $this->belongsTo(User::class,'vendor_id');
+    }
+
+    //every product belongs to one brand
+    public function brand(){
+        return $this->belongsTo(Brand::class);
     }
 }

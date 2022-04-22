@@ -47,7 +47,7 @@
               <tr>
                 <td><a href="#">{{$key+1}}</a></td>
                 <td>
-                  <img src="storage/products_image/{{$product->image}}" width="100">
+                  <img src="/storage/products_image/{{$product->image}}" width="55">
                 </td>
                 <td>{{$product->name}}</td>
                 <td>{!!  $product->description !!}</td>

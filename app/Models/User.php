@@ -55,4 +55,14 @@ class User extends Authenticatable
     {
         return $this->belongsToMany(Permission::class);
     }
+
+    //every vendor has one or many brand
+    public function brands(){
+        return $this->hasMany(Brand::class,'brand_id');
+    }
+
+    //every vendor has many products
+    public function products(){
+        return $this->hasMAny(Product::class);
+    }
 }

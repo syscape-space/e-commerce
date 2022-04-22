@@ -1,4 +1,4 @@
-@extends('admin.layouts.main')
+@extends('vendor.layouts.main')
 
 
 @section('content')
@@ -36,6 +36,7 @@
                 <th>Price</th>
                 <th>Category</th>
                 <th>Vendor</th>
+                <th>Brand</th>
                 <th>Actions</th>
                         
               </tr>
@@ -47,16 +48,20 @@
               <tr>
                 <td><a href="#">{{$key+1}}</a></td>
                 <td>
-                  <img src="storage/products_image/{{$product->image}}" width="100">
+                  <img src="/storage/products_image/{{$product->image}}" width="60">
                 </td>
                 <td>{{$product->name}}</td>
                 <td>{!!  $product->description !!}</td>
                 <td>${{$product->price}}</td>
                 <td>{{$product->category->name}}</td>
+                <td>{{$product->vendor->name}}</td>
                 <td>{{$product->brand->name}}</td>
                 <td>
-                  <a class="btn btn-info" href="{{ route('products.show',$product->id) }}">Show</a>
-                  <a href="{{ route('products.soft.delete',$product->id)}}" class="btn btn-warning">SoftDelete</a>
+                  @if(Auth::user()->id==$product->vendor_id)
+                  <a class="btn btn-primary" href="{{ route('products.edit',$product->id) }}">Edit</a>
+                  @endif
+                  <a class="btn btn-info" href="{{ route('vendor.products.show',$product->id) }}">Show</a>
+                  <a href="{{ route('product.vendor.soft.delete',$product->id)}}" class="btn btn-warning">SoftDelete</a>
                 </td>
 
                  
@@ -72,5 +77,5 @@
         </div>
       </div>
     </div>
-    {!! $products->links() !!}
+
  @endsection

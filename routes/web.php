@@ -2,12 +2,12 @@
 
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\Admin\HomeController;
+use App\Http\Controllers\BrandController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\NotificationController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SendEmailNotificationController;
-use App\Http\Controllers\VendorController;
 use App\Http\Controllers\SubCategoryController;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\FrontProductListController;
@@ -50,6 +50,7 @@ Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/AdminDashbord', [HomeController::class, 'dashboard'])->name('dashboard');
+Route::get('/VendorDashbord', [HomeController::class, 'vendorDashboard'])->name('vendor.dashboard');
 
 
 //list all user
@@ -125,7 +126,6 @@ Route::controller(ProductController::class)->group(function () {
 
 ####### start vendors route ####
 Route::group(['middleware' => ['role:administrator|vendor']], function () {
-    Route::resource('vendors', VendorController::class);
     Route::get('categorie/create', [CategoriesController::class ,'create']);
 });
 ####### start vendors route ######
@@ -188,7 +188,56 @@ Route::controller(OrderController::class)->group(function(){
 Route::get('auth/google', [SocialController::class, 'googleRedirect'])->name('google.login');
 Route::get('auth/google/Callback', [SocialController::class, 'Callback']);
 
+################################ Brand Route ####################################
+Route::resource('brand',BrandController::class);
+Route::controller(BrandController::class)->group(function(){
+    Route::prefix('brand')->group(function(){
+        //softDelete route for admin    
+        Route::get('/soft/delete/{id}', 'softdelete')->name('brand.soft.delete');
+        //hard route for admin
+        Route::get('/hard/delete/{id}', 'hardDelete')->name('brand.hard.delete');
+        //Back from trash  route for admin
+        Route::get('/back/from/trash/{id}', 'backFromTrash')->name('brand.back');
+        //trash route for admin
+        Route::get('/trash/all','trash')->name('brand.trash');
 
+
+        //brands which belongs to vendor
+        Route::get('/vendor/index','vendorBrands')->name('all.vendor.brands');
+        //show brand
+        Route::get('/vendor/{id}','showBrand')->name('brand.vendor.show');
+        //softDelete route
+        Route::get('/vendor/soft/delete/{id}', 'softdeleteBrand')->name('brand.vendor.soft.delete');
+        //hard route
+        Route::get('/vendor/hard/delete/{id}', 'hardDeleteBrand')->name('brand.vendor.hard.delete');
+        //Back from trash  route
+        Route::get('/vendor/back/from/trash/{id}', 'backFromTrashBrand')->name('brand.vendor.back');
+        //trash route
+        Route::get('/vendor/trash/all','trashBrand')->name('brand.vendor.trash');
+
+        //softDelete route
+        Route::get('/vendor/product/soft/delete/{id}', 'softdeleteProduct')->name('product.vendor.soft.delete');
+        //hard route
+        Route::get('/vendor/product/hard/delete/{id}', 'hardDeleteProduct')->name('product.vendor.hard.delete');
+        //Back from trash  route
+        Route::get('/vendor/product/back/from/trash/{id}', 'backFromTrashProduct')->name('product.vendor.back');
+        //trash route
+        Route::get('/vendor/product/trash/all','trashProduct')->name('product.vendor.trash');
+
+
+        //show all products
+        Route::get('/vendor/show/all/products','showProducts')->name('product.vendor.all');
+        //show vendor products
+        Route::get('/vendor/show/vendor/products','showMyProducts')->name('product.vendor.myProduct');
+        //show product page
+        Route::get('vendor/product/{id}','showSingleProduct')->name('vendor.products.show');
+        //show all category
+        Route::get('/vendor/show/category','showAllCategory')->name('vendor.all.category');
+        //show all subCategory
+        Route::get('/vendor/show/subCategory','showAllSubCategory')->name('vendor.all.subcategory');
+    });
+});
+################################ end Brand route ##############################
 
 
 

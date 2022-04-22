@@ -43,6 +43,13 @@
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
+                        @if (Auth::check() && Auth::user()->role == 'admin')
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ route('dashboard') }}">Dashboard</a>
+                            </li>
+                        @elseif(Auth::check() && Auth::user()->role == 'vendor')
+                            <a class="nav-link" href="{{ route('vendor.dashboard') }}">Dashboard</a>
+                        @endif
                         @if (Auth::check())
                             <li class="nav-item">
                                 <a class="nav-link m-0 p-0" href="{{ route('cart.list') }}">
@@ -95,7 +102,7 @@
                                     <a class="dropdown-item"
                                         href="{{ route('user.orders', Auth::user()->id) }}">Order</a>
                                     <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                                 document.getElementById('logout-form').submit();">
+                                                                     document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
                                     </a>
 

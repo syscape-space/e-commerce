@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Brand;
 use App\Models\Product;
 use App\Models\User;
 use App\Notifications\ProductNotification;
@@ -9,8 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
-
-
+use Illuminate\Validation\Rule;
 
 class ProductController extends Controller
 {
@@ -21,7 +21,8 @@ class ProductController extends Controller
      */
     public function __construct()
     {
-       $this->middleware(['auth','Admin']);
+       $this->middleware(['auth']);
+       $this->middleware(['Admin'])->except(['create','edit','update','store']);
     }
 
     /**
@@ -42,7 +43,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('admin.product.create');
+        $brands=Brand::where('vendor_id',auth()->user()->id)->get();
+        return view('vendor.product.create',compact('brands'));
     }
 
     /**
@@ -57,8 +59,9 @@ class ProductController extends Controller
             'name'=>'required|Unique:products',
             'description'=>'required',
             'price'=>'required|Numeric',
-            'image'=>'max:1999|image|nullable',
+            'image'=>'max:1999|image|required',
             'category'=>'required',
+            'brand_id'=>'required',
             'subcategory'=>'required'
         ]);
 
@@ -75,6 +78,7 @@ class ProductController extends Controller
         $product->name=$request->input('name');
         $product->image=$filename;
         $product->vendor_id=auth()->user()->id;
+        $product->brand_id=$request->input('brand_id');
         $product->category_id=$request->input('category');
         $product->subCategory_id=$request->input('subcategory');
         $product->description=$request->input('description');
@@ -87,7 +91,7 @@ class ProductController extends Controller
         $admins=User::where('role','admin')->get();
         $msg = "There are new products need to accept" ;
         (new NotificationController)->sendNotification($admins , $msg);
-        return redirect('products')->with('success','waiting for the admin approval');
+        return redirect()->route('products.create')->with('success','waiting for the admin approval');
     }
 
     /**
@@ -109,10 +113,11 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
+        $brands=Brand::where('vendor_id',auth()->user()->id)->get();
         if(auth()->user()->id !== $product->vendor_id){
             return redirect('/products')->with('error','You can not edit this product');
         }
-        return view('admin.product.edit')->with('product',$product);
+        return view('vendor.product.edit',compact('product','brands'));
     }
 
     /**
@@ -125,26 +130,26 @@ class ProductController extends Controller
     public function update(Request $request, Product $product)
     {
         $this->validate($request,[
-            'name'=>'required',
+            'name'=>['required',Rule::unique('products')->ignore(request('name'),'name')],
             'description'=>'required',
             'price'=>'required|Numeric',
             'image'=>'max:1999|image|nullable',
             'category'=>'required',
+            'brand_id'=>'required',
             'subcategory'=>'required',
         ]);
+        
 
         //Handle file upload
         if($request->hasFile('image')){
             $file=$request->file('image');
             $filename=md5(file_get_contents($file->getRealPath())) .'.'. $file->extension();
             $path=$request->file('image')->storeAs('public/products_image',$filename);
-
-        }else {
-            $filename='noImage.jpg';
+            $product->image=$filename;
         }
         $product->name=$request->input('name');
-        $product->image=$filename;
         $product->vendor_id=auth()->user()->id;
+        $product->brand_id=$request->input('brand_id');
         $product->category_id=$request->input('category');
         $product->subCategory_id=$request->input('subcategory');
         $product->description=$request->input('description');
@@ -153,7 +158,7 @@ class ProductController extends Controller
             $product->image=$filename;
         }
         $product->save();
-        return redirect('products')->with('success','product added successfuly');
+        return redirect()->back()->with('success','product edited successfuly');
     }
 
     /**

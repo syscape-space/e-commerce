@@ -15,13 +15,13 @@
   <link href="{{asset('admin/vendor/bootstrap/css/bootstrap.min.css')}}" rel="stylesheet" type="text/css">
   <link href="{{asset('admin/css/ruang-admin.min.css')}}" rel="stylesheet">
 
+
   <style>
     .pagination{
-        float: right;
+        float: left;
         margin-top: 10px;
     }
 </style>
-
 <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.15/dist/summernote.min.css" rel="stylesheet">
 @livewireStyles
 </head>

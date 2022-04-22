@@ -34,12 +34,30 @@ class HomeController extends Controller
         //dd(auth()->user()->role);
         if(auth()->user()->role == 'admin'){
             return redirect()->route('dashboard');
-        } 
+        }
+        elseif(auth()->user()->role == 'vendor'){
+            return redirect()->route('vendor.dashboard');
+        }
         return redirect()->route('frontend');
         
     }
     public function dashboard()
     {
+        if(auth()->user()->role == 'admin'){
         return view('admin.layouts.main');
+        }
+        else{
+            return redirect()->route('frontend')->with('success','you are not admin');
+        }
+    }
+
+    public function vendorDashboard()
+    {
+        if(auth()->user()->role == 'vendor'){
+            return view('vendor.layouts.main');
+        }
+        else{
+            return redirect()->route('frontend')->with('success','you are not vendor');
+        }
     }
 }
