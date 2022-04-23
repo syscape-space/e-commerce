@@ -61,6 +61,16 @@
                             </div>
                         </div>
 
+                        <div class="form-group row">
+
+                            <div class="col-md-6">
+                                <div class="form-check form-switch col-form-label text-md-right">
+                                    <input class="form-check-input" type="checkbox" name="vendor" value="0" id="mySwitch">
+                                    <label for="mySwitch" class="form-check-label">Register As Vendor</label>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="form-group row mb-0">
                             <div class="col-md-6 offset-md-4">
 

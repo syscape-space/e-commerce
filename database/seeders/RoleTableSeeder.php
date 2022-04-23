@@ -32,8 +32,15 @@ class RoleTableSeeder extends Seeder
            
         ]);
         $user= Role::create([
-            'name' =>  'user',
-            'display_name' =>  'user',
+            'name' =>  'customer',
+            'display_name' =>  'customer',
+            'description' => 'can do specific tasks  in the project',
+           
+           
+        ]);
+        $user= Role::create([
+            'name' =>  'vendor',
+            'display_name' =>  'vendor',
             'description' => 'can do specific tasks  in the project',
            
            

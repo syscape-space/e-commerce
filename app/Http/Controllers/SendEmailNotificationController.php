@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use App\Notifications\SendNotification;
+use App\Notifications\emailNotification;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 
@@ -27,14 +27,19 @@ class SendEmailNotificationController extends Controller
     //Send email to all users
     public function sendEmailToAllUsers(Request $request)
     {
+        $request->validate([
+            'head'=>'required',
+            'body'=>'required',
+            'urlaction'=>'required'
+        ]);
+
         $users=User::all();
-        
         $data=[
             'head'=>$request->head,
             'body'=>$request->body,
             'urlaction'=>$request->urlaction,
         ];
-        Notification::send($users,new SendNotification($data));
+        Notification::send($users,new emailNotification($data));
         return redirect('/send.email')->with('success','Email sends successfuly');
     }
 }
