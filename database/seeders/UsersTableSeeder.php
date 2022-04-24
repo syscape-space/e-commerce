@@ -24,8 +24,6 @@ class UsersTableSeeder extends Seeder
         'email' =>  'superAdmin@gmail.com',
         'password' => bcrypt('123456'),
         'email_verified_at'=>NOW(),
-        'address'=>'Syria',
-        'phone'=>'0000',
         'role' =>  'Superadministrator',
        
     ]);
@@ -38,21 +36,41 @@ class UsersTableSeeder extends Seeder
             'role'=>'admin',
             'password'=>bcrypt('123456'),
             'email_verified_at'=>NOW(),
-            'address'=>'Syria',
-            'phone'=>'0000',
             'role'=>'admin'
         ])->attachRole('administrator');
 
         
         User::create([
-            'name'=>'user',
-            'email'=>'user@gmail.com',
+            'name'=>'customer',
+            'email'=>'customer@gmail.com',
             'password'=>bcrypt('123456'),
             'email_verified_at'=>NOW(),
-            'address'=>'Syria',
-            'phone'=>'0000',
-            'role'=>'user'
-        ])->attachRole('user');
+            'role'=>'customer'
+        ])->attachRole('customer');
+
+        // active vendor
+        User::create([
+            'name'=>'vendor',
+            'email'=>'vendor@gmail.com',
+            'password'=>bcrypt('123456'),
+            'email_verified_at'=>NOW(),
+            'role'=>'vendor',
+            'as_vendor' => 1,
+            'phone' => '0000',
+            'adress' => 'Syria',
+        ])->attachRole('vendor');
+
+        // not active vendor
+        User::create([
+            'name'=>'vendor1',
+            'email'=>'vendor1@gmail.com',
+            'password'=>bcrypt('123456'),
+            'email_verified_at'=>NOW(),
+            'role'=>'vendor',
+            'as_vendor' => 0,
+            'phone' => '0000',
+            'adress' => 'Syria',
+        ]);
 
     }
 }

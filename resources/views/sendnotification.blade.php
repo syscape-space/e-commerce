@@ -5,26 +5,15 @@
 
 @section('content')
 
-<div class="row">
-    <div class="col-lg-12 margin-tb">
-        <div class="pull-left">
-            <h2>Send Email</h2>
-        </div>
+<div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 ml-4 text-gray-800">Email</h1>
+            <ol class="breadcrumb">
+              <li class="breadcrumb-item"><a href="./">Home</a></li>
+              <li class="breadcrumb-item active" aria-current="page">Email</li>
+              <li class="breadcrumb-item active" aria-current="page">Send</li>
+            </ol>
     </div>
-</div>
 
-   
-@if ($errors->any())
-    <div class="card mt-3">
-        <div class="card-body">
-            <div class="alert alert-danger">
-                @foreach ($errors->all() as $error)
-                   <p> {{ $error }}<p>
-                @endforeach
-            </div>
-        </div>
-    </div>
-@endif
 
 @if ($message = Session::get('success'))
         <div class="alert alert-success">
@@ -33,40 +22,51 @@
     @endif
 
    
-
-<form action="{{ route('send.email.to.all.users') }}" method="POST" enctype="multipart/form-data">
-    @csrf
-    <div class="row">
-
-         <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Email header</strong>
-                <input type="text" name="head" class="form-control" placeholder="Email header">
+<div class="row justify-content-center">
+      <div class="col-lg-10">
+        <form action="{{ route('send.email.to.all.users') }}" method="POST" enctype="multipart/form-data">@csrf
+        <div class="card mb-6">
+            <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                <h6 class="m-0 font-weight-bold text-primary">Send Email</h6>
             </div>
-        </div>
+            <div class="card-body">
 
+                <div class="form-group"> 
+                    <label for="header">Email header</label>
+                    <input type="text" name="head" class="form-control @error('head') is-invalid @enderror " id="header" aria-describedby=""
+                      placeholder="Email header">
+                      @error('head')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                  </div>
 
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>Email Body</strong>
-                <input type="text" name="body" class="form-control" placeholder="Email body">
-            </div>
-        </div>
+                <div class="form-group"> 
+                    <label for="body">Email Body</label>
+                    <input type="text" name="body" class="form-control @error('body') is-invalid @enderror " id="body" aria-describedby=""
+                      placeholder="Email body">
+                      @error('body')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
 
-
-        <div class="col-xs-12 col-sm-12 col-md-12">
-            <div class="form-group">
-                <strong>URl</strong>
-                <input type="text" name="urlaction" class="form-control" placeholder="URL">
-            </div>
-        </div>
+                <div class="form-group"> 
+                    <label for="url">URl</label>
+                    <input type="url" name="urlaction" class="form-control @error('urlaction') is-invalid @enderror " id="url" aria-describedby=""
+                      placeholder="URL">
+                      @error('urlaction')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
        
-
-        <div class="col-xs-12 col-sm-12 col-md-12 text-center">
-            <button type="submit" class="btn btn-primary">Send</button>
-        </div>
-
+               <button type="submit" class="btn btn-primary">Send</button>
     </div>
+</div>
 
 </form>
 

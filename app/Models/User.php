@@ -23,8 +23,7 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'phone',
-        'address',
+        'as_vendor', // null=> not vendor , 0=> not active , 1 active
         'google-id'
     ];
 

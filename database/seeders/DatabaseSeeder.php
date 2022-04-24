@@ -112,9 +112,7 @@ class DatabaseSeeder extends Seeder
             'brand_id'=>1,
             'vendor_id'=>4
         ]);
-       
-         
-        
+
     }
     
 }

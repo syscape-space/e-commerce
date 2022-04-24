@@ -46,14 +46,28 @@ Auth::routes();
 ####### end Frontend route #######
 
 
-
+####### Dashboards rout #####
 Route::get('/home', [HomeController::class, 'index'])->name('home');
 Route::get('/AdminDashbord', [HomeController::class, 'dashboard'])->name('dashboard');
 Route::get('/VendorDashbord', [HomeController::class, 'vendorDashboard'])->name('vendor.dashboard');
 
 
-##########    list all user  #######################
+####### start vendors route ######
+//list all vendors
+Route::get('/vendors/list', [UserController::class , 'vendorsList'] )->name('vendors.list');
+// list vendors to accept 
+Route::get('/vendors/to/accept', [UserController::class , 'vendorsToAccept'] )->name('vendors.to.accept');
+//accept vendor
+Route::get('/vendor/accept/{id}', [UserController::class , 'acceptVendor'] )->name('accept.vendor');
+//decline vendor
+Route::get('/vendor/decline/{id}', [UserController::class , 'declineVendor'] )->name('decline.vendor');
+//block vendor
+Route::get('/vendor/block/{id}', [UserController::class , 'blockVendor'] )->name('block.vendor');
 
+##########  start users route #######################
+//list all user
+Route::get('/users', [UserController::class , 'list'] )->name('users.list');
+//delete user
 Route::resource('users', UserController::class);
 Route::controller(UserController::class)->group(function () {
     Route::prefix('users')->group(function () {
@@ -129,12 +143,6 @@ Route::controller(ProductController::class)->group(function () {
     });     
 
     });
-
-####### start vendors route ####
-Route::group(['middleware' => ['role:administrator|vendor']], function () {
-    Route::get('categorie/create', [CategoriesController::class ,'create']);
-});
-####### start vendors route ######
 
 
 ##################################### Send email to all users Route #############################

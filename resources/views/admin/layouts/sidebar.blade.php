@@ -17,12 +17,12 @@
             Features
         </div>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap"
-                aria-expanded="true" aria-controls="collapseBootstrap">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#category"
+                aria-expanded="true" aria-controls="category">
                 <i class="far fa-fw fa-window-maximize"></i>
                 <span>Category</span>
             </a>
-            <div id="collapseBootstrap" class="collapse" aria-labelledby="headingBootstrap"
+            <div id="category" class="collapse" aria-labelledby="headingBootstrap"
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Category </h6>
@@ -36,12 +36,12 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap1"
-                aria-expanded="true" aria-controls="collapseBootstrap1">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#subcategory"
+                aria-expanded="true" aria-controls="subcategory">
                 <i class="far fa-fw fa-window-maximize"></i>
                 <span>SubCategory</span>
             </a>
-            <div id="collapseBootstrap1" class="collapse" aria-labelledby="headingBootstrap"
+            <div id="subcategory" class="collapse" aria-labelledby="headingBootstrap"
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">SubCategory </h6>
@@ -54,12 +54,12 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap2"
-                aria-expanded="true" aria-controls="collapseBootstrap2">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#product"
+                aria-expanded="true" aria-controls="product">
                 <i class="far fa-fw fa-window-maximize"></i>
                 <span>products</span>
             </a>
-            <div id="collapseBootstrap2" class="collapse" aria-labelledby="headingBootstrap"
+            <div id="product" class="collapse" aria-labelledby="headingBootstrap"
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Products </h6>
@@ -70,26 +70,42 @@
                 </div>
             </div>
         </li>
+
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap3"
-                aria-expanded="true" aria-controls="collapseBootstrap3">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#vendor"
+                aria-expanded="true" aria-controls="vendor">
+                <i class="far fa-fw fa-window-maximize"></i>
+                <span>Vendors</span>
+            </a>
+            <div id="vendor" class="collapse" aria-labelledby="headingBootstrap"
+                data-parent="#accordionSidebar">
+                <div class="bg-white py-2 collapse-inner rounded">
+                    <h6 class="collapse-header">Vendors </h6>
+                    <a class="collapse-item" href="{{route('vendors.list')}}">List</a>
+                    <a class="collapse-item" href="{{route('vendors.to.accept')}}">Accept</a>
+                </div>
+            </div>
+        </li>
+
+        <li class="nav-item">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#brand"
+                aria-expanded="true" aria-controls="brand">
                 <i class="far fa-fw fa-window-maximize"></i>
                 <span>Brand</span>
             </a>
-            <div id="collapseBootstrap3" class="collapse" aria-labelledby="headingBootstrap"
+            <div id="brand" class="collapse" aria-labelledby="headingBootstrap"
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Brand </h6>
-                    <a class="collapse-item" href="{{ route('brand.index') }}">View all Brands</a>
-                    <a class="collapse-item" href="{{ route('brand.trash') }}">Trash</a>
-
+                    <a class="collapse-item" href="{{route('brand.index')}}">View all Brands</a>
+                    <a class="collapse-item" href="{{route('brand.trash')}}">Trash</a>
                 </div>
             </div>
         </li>
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap4"
-                aria-expanded="true" aria-controls="collapseBootstrap4">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#user"
+                aria-expanded="true" aria-controls="user">
                 <i class="far fa-fw fa-window-maximize"></i>
                 <span>Users</span>
             </a>
@@ -105,12 +121,12 @@
             @endif
         </li>
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap5"
-                aria-expanded="true" aria-controls="collapseBootstrap5">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#order"
+                aria-expanded="true" aria-controls="order">
                 <i class="far fa-fw fa-window-maximize"></i>
                 <span>User Order</span>
             </a>
-            <div id="collapseBootstrap5" class="collapse" aria-labelledby="headingBootstrap"
+            <div id="order" class="collapse" aria-labelledby="headingBootstrap"
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Order </h6>
@@ -121,12 +137,12 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseBootstrap6"
-                aria-expanded="true" aria-controls="collapseBootstrap6">
+            <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#email"
+                aria-expanded="true" aria-controls="email">
                 <i class="far fa-fw fa-window-maximize"></i>
                 <span>Send Email</span>
             </a>
-            <div id="collapseBootstrap6" class="collapse" aria-labelledby="headingBootstrap"
+            <div id="email" class="collapse" aria-labelledby="headingBootstrap"
                 data-parent="#accordionSidebar">
                 <div class="bg-white py-2 collapse-inner rounded">
                     <h6 class="collapse-header">Send Email </h6>
