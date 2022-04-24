@@ -57,7 +57,7 @@ class DatabaseSeeder extends Seeder
         SubCategory::create(['name'=>'sony','category_id'=>2]);
         SubCategory::create(['name'=>'novel','category_id'=>3]);
 
-        Brand::create(['name'=>'ahmad shop','logo'=>'logo.jpg','vendor_id'=>4]);
+        Brand::create(['name'=>'ahmad shop','logo'=>'logo.jpg','vendor_id'=>1]);
 
 
         Product::create([

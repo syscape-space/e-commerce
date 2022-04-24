@@ -90,7 +90,8 @@ class BrandController extends Controller
      */
     public function show(Brand $brand)
     {
-        return view('vendor.brand.show')->with('brand',$brand);
+        $products=Product::where('is_acceptable','!=', NULL)->where('brand_id',$brand->id)->get();
+        return view('admin.brand.show',compact('brand','products'));
     }
 
     /**

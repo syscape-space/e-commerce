@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Auth;
 use DB;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB as FacadesDB;
+use Illuminate\Validation\Rule;
 
 class UserController extends Controller
   {
@@ -188,7 +189,7 @@ class UserController extends Controller
         
                     'name' => 'required',
         
-                    'email' => 'required|email|unique:users,email,',
+                    'email' => ['required','email',Rule::unique('users')->ignore(request('email'),'email')],
         
                     'password' => 'same:confirm-password',
         

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class SubCategoryController extends Controller
 {
@@ -60,7 +61,7 @@ class SubCategoryController extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name'=>'required|Unique:sub_categories',
+            'name'=>['required',Rule::unique('sub_categories')->ignore(request('name'),'name')],
             'category'=>'required'
         ]);
 

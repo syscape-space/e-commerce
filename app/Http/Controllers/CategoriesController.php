@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Validation\Rule;
 
 class CategoriesController extends Controller
 {
@@ -70,7 +71,7 @@ class CategoriesController extends Controller
     public function update(UpdatecategoryRequest $request, Category $category)
     {
         $request->validate([
-            'name'=>'required|Unique:categories',
+            'name'=>['required',Rule::unique('categories')->ignore(request('name'),'name')],
             'description'=>'required',
         ]);
         if($request->has('image')){
