@@ -42,7 +42,7 @@
                       <tr>
 
                         <td>{{$key+1}}</td>
-                        <td><img src="{{Storage::url($category->image)}}" width="100"></td>
+                        <td><img src="/storage/category_image/{{$category->image}}" width="100"></td>
                         <td>{{$category->name}}</td>
                         <td>{!!  $category->description !!}</td>
                         

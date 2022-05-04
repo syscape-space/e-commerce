@@ -2,14 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\StorecategoryRequest;
-use App\Http\Requests\UpdatecategoryRequest;
-use App\Models\Category;
+use App\Models\User;
 use App\Models\Product;
+use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StorecategoryRequest;
+use App\Http\Requests\UpdatecategoryRequest;
 
 class CategoriesController extends Controller
 {
@@ -38,17 +39,28 @@ class CategoriesController extends Controller
 
     public function store(StorecategoryRequest $request)
     {
-        $request->validate([
+        $this->validate($request,[
             'name'=>'required|Unique:categories',
             'description'=>'required',
-            'image'=>'required'
+            'image'=>'max:1999|image|nullable',
         ]);
 
-        $path = $request->image->store('public/images');
-        $data = $request->all();
-        $data['image']=$path;
-        Category::create($data);
-        return redirect()->route('categories.index')->with('success','New Category has been added successfuly');
+        //Handle file upload
+        if($request->hasFile('image')){
+            $file=$request->file('image');
+            $filename=md5(file_get_contents($file->getRealPath())).date('Y-m-d H-i-s').'.'. $file->extension();
+            $path=$request->file('image')->storeAs('public/category_image',$filename);
+
+        }else {
+            $filename='noImage.jpg';
+        }
+        $category=new Category;
+        $category->name=$request->input('name');
+        $category->image=$filename;
+        $category->description=$request->input('description');
+        $category->save();
+
+        return redirect()->route('categories.create')->with('success','category added successfuly');
     }
 
     public function show($id)
@@ -70,19 +82,27 @@ class CategoriesController extends Controller
 
     public function update(UpdatecategoryRequest $request, Category $category)
     {
-        $request->validate([
+        $this->validate($request,[
             'name'=>['required',Rule::unique('categories')->ignore(request('name'),'name')],
             'description'=>'required',
+            'image'=>'max:1999|image|nullable',
         ]);
-        if($request->has('image')){
-            $path = $request->image->store('public/images');
-        } else {
-            $path = $category->image;
+
+        //Handle file upload
+        if($request->hasFile('image')){
+            $file=$request->file('image');
+            $filename=md5(file_get_contents($file->getRealPath())).date('Y-m-d H-i-s').'.'. $file->extension();
+            $path=$request->file('image')->storeAs('public/category_image',$filename);
+            $category->image=$filename;
         }
-        $data = $request->all();
-        $data['image']=$path;
-        $category->update($data);
-        return redirect()->route('categories.index')->with(['success'=>'Category has been updated']);
+        $category->name=$request->input('name');
+        $category->description=$request->input('description');
+        if($request->hasFile('image')){
+            $category->image=$filename;
+        }
+        $category->save();
+        return redirect()->back()->with('success','category edited successfuly');
+
     }
 
     public function destroy(category $category)
@@ -109,6 +129,12 @@ class CategoriesController extends Controller
     //Hard Delete
     public function hardDelete($id)
     {
+        $categories=Category::onlyTrashed()->where('id',$id)->get();
+        foreach($categories as $category){
+            if($category->image != 'noImage.jpg'){
+                Storage::disk('public')->delete('category_image/'.$category->image);
+        }
+    }
         $category = Category::onlyTrashed()->where('id',$id)->forcedelete();
          return redirect()->route('categories.trash')->with('success', 'category Is Deleted Successfully');
     }

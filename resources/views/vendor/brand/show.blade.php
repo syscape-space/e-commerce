@@ -38,7 +38,7 @@
             <div class="col-xs-12 col-sm-12 col-md-12">
                 <div class="form-group">
                     <strong>Products count:</strong>
-                    {{$brand->products->count()-\App\Models\Product::whereNull('is_acceptable')->get()->count()}}
+                    {{$brand->products->count()-\App\Models\Product::where('brand_id',$brand->id)->whereNull('is_acceptable')->get()->count()}}
                 </div>
             </div>
 

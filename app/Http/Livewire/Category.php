@@ -23,6 +23,6 @@ class Category extends Component
 
     public function updatedSelectedCategory($category_id)
     {
-        $this->subCategories = SubCategory::where('category_id', $category_id)->get();
+        return $this->subCategories = SubCategory::where('category_id', $category_id)->get();
     }
 }

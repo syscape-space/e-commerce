@@ -68,7 +68,7 @@ class ProductController extends Controller
         //Handle file upload
         if($request->hasFile('image')){
             $file=$request->file('image');
-            $filename=md5(file_get_contents($file->getRealPath())) .'.'. $file->extension();
+            $filename=md5(file_get_contents($file->getRealPath())).date('Y-m-d H-i-s').'.'. $file->extension();
             $path=$request->file('image')->storeAs('public/products_image',$filename);
 
         }else {
@@ -143,7 +143,7 @@ class ProductController extends Controller
         //Handle file upload
         if($request->hasFile('image')){
             $file=$request->file('image');
-            $filename=md5(file_get_contents($file->getRealPath())) .'.'. $file->extension();
+            $filename=md5(file_get_contents($file->getRealPath())).date('Y-m-d H-i-s').'.'. $file->extension();
             $path=$request->file('image')->storeAs('public/products_image',$filename);
             $product->image=$filename;
         }
@@ -194,6 +194,14 @@ class ProductController extends Controller
     //Hard Delete
     public function hardDelete($id)
     {
+        // public function destroy($id){
+        //     $product = Product::findOrFail($id);
+    
+        //     Storage::delete('public/uploads' . $product->product_img);
+            
+        //     $product->delete();
+        //     return redirect('/products');
+        // }
         $product = Product::onlyTrashed()->where('id',$id)->forcedelete();
          return redirect()->route('products.trash')->with('success', 'Product Is Deleted Successfully');
     }

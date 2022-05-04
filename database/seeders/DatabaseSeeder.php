@@ -35,17 +35,17 @@ class DatabaseSeeder extends Seeder
         $this->Call(UsersTableSeeder::class);
         Category::create([
             'name'=>'laptop ',
-            'image'=>'public/images/laptop.jpg',
+            'image'=>'laptops.jpg',
             'description'=>'laptop category',
         ]);
         Category::create([
             'name'=>'mobile phone',
-            'image'=>'public/images/phone.png',
+            'image'=>'mobiles.jpg',
             'description'=>'mobile phone category',
         ]);
         Category::create([
             'name'=>'book',
-            'image'=>'public/images/book.jpg',
+            'image'=>'books.jpg',
             'description'=>'book category',
         ]);
 

@@ -9,7 +9,11 @@
               <li class="breadcrumb-item active" aria-current="page">Create</li>
             </ol>
     </div>
-
+    @if ($message = Session::get('success'))
+    <div class="alert alert-info">
+        <p>{{ $message }}</p>
+    </div>
+  @endif
     <div class="row justify-content-center">
       <div class="col-lg-10">
         <form action="{{route('categories.store')}}" method="POST" enctype="multipart/form-data">@csrf

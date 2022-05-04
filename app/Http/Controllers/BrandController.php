@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Brand;
-use App\Http\Requests\StoreBrandRequest;
-use App\Http\Requests\UpdateBrandRequest;
-use App\Models\Category;
 use App\Models\Product;
+use App\Models\Category;
 use App\Models\SubCategory;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Storage;
+use App\Http\Requests\StoreBrandRequest;
+use App\Http\Requests\UpdateBrandRequest;
 
 class BrandController extends Controller
 {
@@ -61,7 +62,7 @@ class BrandController extends Controller
         //Handle file upload
         if($request->hasFile('logo')){
             $file=$request->file('logo');
-            $filename=md5(file_get_contents($file->getRealPath())) .'.'. $file->extension();
+            $filename=md5(file_get_contents($file->getRealPath())).date('Y-m-d H-i-s').'.'. $file->extension();
             $path=$request->file('logo')->storeAs('public/brands_logo',$filename);
 
         }else {
@@ -125,7 +126,7 @@ class BrandController extends Controller
         //Handle file upload
         if($request->hasFile('logo')){
             $file=$request->file('logo');
-            $filename=md5(file_get_contents($file->getRealPath())) .'.'. $file->extension();
+            $filename=md5(file_get_contents($file->getRealPath())).date('Y-m-d H-i-s').'.'. $file->extension();
             $path=$request->file('logo')->storeAs('public/brands_logo',$filename);
             $brand->logo=$filename;
         }
@@ -166,6 +167,12 @@ class BrandController extends Controller
     //Hard Delete for admin
     public function hardDelete($id)
     {
+        $brands=Brand::onlyTrashed()->where('id',$id)->get();
+        foreach($brands as $brand){
+            if($brand->logo != 'noImage.jpg'){
+                Storage::disk('public')->delete('brands_logo/'.$brand->logo);
+        }
+    }
         $brand = Brand::onlyTrashed()->where('id',$id)->forcedelete();
          return redirect()->route('brand.trash')->with('success', 'brand Is Deleted Successfully');
     }
@@ -200,6 +207,12 @@ class BrandController extends Controller
     //Hard Delete
     public function hardDeleteBrand($id)
     {
+        $brands=Brand::onlyTrashed()->where('id',$id)->get();
+        foreach($brands as $brand){
+            if($brand->logo != 'noImage.jpg'){
+                Storage::disk('public')->delete('brands_logo/'.$brand->logo);
+        }
+    }
         $brand = Brand::onlyTrashed()->where('id',$id)->forcedelete();
          return redirect()->route('brand.vendor.trash')->with('success', 'brand Is Deleted Successfully');
     }
@@ -233,7 +246,15 @@ class BrandController extends Controller
     //Hard Delete
     public function hardDeleteProduct($id)
     {
+        $products=Product::onlyTrashed()->where('id',$id)->get();
+        foreach($products as $product){
+            if($product->image != 'noImage.jpg'){
+                Storage::disk('public')->delete('products_image/'.$product->image);
+        }
+    }
+
         $product = Product::onlyTrashed()->where('id',$id)->forcedelete();
+        
          return redirect()->back()->with('success', 'product Is Deleted Successfully');
     }
     //Back from trash
