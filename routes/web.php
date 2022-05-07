@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 use App\Http\Controllers\CategoriesController;
 use App\Http\Controllers\Admin\HomeController;
@@ -55,7 +55,7 @@ Route::get('/VendorDashbord', [HomeController::class, 'vendorDashboard'])->name(
 ####### start vendors route ######
 //list all vendors
 Route::get('/vendors/list', [UserController::class , 'vendorsList'] )->name('vendors.list');
-// list vendors to accept 
+// list vendors to accept
 Route::get('/vendors/to/accept', [UserController::class , 'vendorsToAccept'] )->name('vendors.to.accept');
 //accept vendor
 Route::get('/vendor/accept/{id}', [UserController::class , 'acceptVendor'] )->name('accept.vendor');
@@ -79,7 +79,7 @@ Route::controller(UserController::class)->group(function () {
 
 
 
-########Categories######   
+########Categories######
 
 Route::resource('categories', CategoriesController::class);
 
@@ -116,8 +116,8 @@ Route::controller(SubCategoryController::class)->group(function () {
         Route::get('/back/from/trash/{id}', 'backFromTrash')->name('subCategories.back');
         //trash route
         Route::get('/trash/all','trash')->name('subCategories.trash');
-    });    
-    
+    });
+
 });
 
 #### end subCategories route ####
@@ -140,7 +140,7 @@ Route::controller(ProductController::class)->group(function () {
         Route::get('/list/ToAccept', 'listProductsToAccept')->name('products.accept.list');
         Route::get('/accept/{id}', 'AcceptProduct')->name('product.accept');
         Route::get('/decline/{id}','declineProduct')->name('product.decline');
-    });     
+    });
 
     });
 
@@ -152,7 +152,7 @@ Route::post('/send.email.to.all.users',[SendEmailNotificationController::class,'
 ################################# Product Notification Route ##############################
 Route::controller(NotificationController::class)->group(function(){
     Route::prefix('admin')->middleware('auth','Admin')->group(function(){
-        Route::get('/notification.Notification','adminNotification')->name('admin.notifications'); 
+        Route::get('/notification.Notification','adminNotification')->name('admin.notifications');
         Route::get('/notification.markasread/{id}', 'adminToMarkAsRead')->name('notifications.admin.markasread');
         Route::get('/notification.markasunread/{id}', 'adminToMarkAsUnRead')->name('notifications.admin.markasunread');
         Route::get('/delete.all.notification','adminDeleteAll')->name('adminDeleteAllNotification');
@@ -194,7 +194,7 @@ Route::controller(OrderController::class)->group(function(){
     Route::get('order/accept/{id}', 'acceptOrder')->name('order.accept')->middleware('auth','Admin');
     Route::get('order/decline/{id}','declineOrder')->name('order.decline')->middleware('auth','Admin');
 });
-    
+
 ######################### end order route ##########################
 
 
@@ -206,7 +206,7 @@ Route::get('auth/google/Callback', [SocialController::class, 'Callback']);
 Route::resource('brand',BrandController::class);
 Route::controller(BrandController::class)->group(function(){
     Route::prefix('brand')->group(function(){
-        //softDelete route for admin    
+        //softDelete route for admin
         Route::get('/soft/delete/{id}', 'softdelete')->name('brand.soft.delete');
         //hard route for admin
         Route::get('/hard/delete/{id}', 'hardDelete')->name('brand.hard.delete');
@@ -217,38 +217,38 @@ Route::controller(BrandController::class)->group(function(){
 
 
         //brands which belongs to vendor
-        Route::get('/vendor/index','vendorBrands')->name('all.vendor.brands');
+        Route::get('/vendor/index','vendorBrands')->name('all.vendor.brands')->middleware('Vendor');
         //show brand
-        Route::get('/vendor/{id}','showBrand')->name('brand.vendor.show');
+        Route::get('/vendor/{id}','showBrand')->name('brand.vendor.show')->middleware('Vendor');
         //softDelete route
-        Route::get('/vendor/soft/delete/{id}', 'softdeleteBrand')->name('brand.vendor.soft.delete');
+        Route::get('/vendor/soft/delete/{id}', 'softdeleteBrand')->name('brand.vendor.soft.delete')->middleware('Vendor');
         //hard route
-        Route::get('/vendor/hard/delete/{id}', 'hardDeleteBrand')->name('brand.vendor.hard.delete');
+        Route::get('/vendor/hard/delete/{id}', 'hardDeleteBrand')->name('brand.vendor.hard.delete')->middleware('Vendor');
         //Back from trash  route
-        Route::get('/vendor/back/from/trash/{id}', 'backFromTrashBrand')->name('brand.vendor.back');
+        Route::get('/vendor/back/from/trash/{id}', 'backFromTrashBrand')->name('brand.vendor.back')->middleware('Vendor');
         //trash route
-        Route::get('/vendor/trash/all','trashBrand')->name('brand.vendor.trash');
+        Route::get('/vendor/trash/all','trashBrand')->name('brand.vendor.trash')->middleware('Vendor');
 
         //softDelete route
-        Route::get('/vendor/product/soft/delete/{id}', 'softdeleteProduct')->name('product.vendor.soft.delete');
+        Route::get('/vendor/product/soft/delete/{id}', 'softdeleteProduct')->name('product.vendor.soft.delete')->middleware('Vendor');
         //hard route
-        Route::get('/vendor/product/hard/delete/{id}', 'hardDeleteProduct')->name('product.vendor.hard.delete');
+        Route::get('/vendor/product/hard/delete/{id}', 'hardDeleteProduct')->name('product.vendor.hard.delete')->middleware('Vendor');
         //Back from trash  route
-        Route::get('/vendor/product/back/from/trash/{id}', 'backFromTrashProduct')->name('product.vendor.back');
+        Route::get('/vendor/product/back/from/trash/{id}', 'backFromTrashProduct')->name('product.vendor.back')->middleware('Vendor');
         //trash route
-        Route::get('/vendor/product/trash/all','trashProduct')->name('product.vendor.trash');
+        Route::get('/vendor/product/trash/all','trashProduct')->name('product.vendor.trash')->middleware('Vendor');
 
 
         //show all products
-        Route::get('/vendor/show/all/products','showProducts')->name('product.vendor.all');
+        Route::get('/vendor/show/all/products','showProducts')->name('product.vendor.all')->middleware('Vendor');
         //show vendor products
-        Route::get('/vendor/show/vendor/products','showMyProducts')->name('product.vendor.myProduct');
+        Route::get('/vendor/show/vendor/products','showMyProducts')->name('product.vendor.myProduct')->middleware('Vendor');
         //show product page
-        Route::get('vendor/product/{id}','showSingleProduct')->name('vendor.products.show');
+        Route::get('vendor/product/{id}','showSingleProduct')->name('vendor.products.show')->middleware('Vendor');
         //show all category
-        Route::get('/vendor/show/category','showAllCategory')->name('vendor.all.category');
+        Route::get('/vendor/show/category','showAllCategory')->name('vendor.all.category')->middleware('Vendor');
         //show all subCategory
-        Route::get('/vendor/show/subCategory','showAllSubCategory')->name('vendor.all.subcategory');
+        Route::get('/vendor/show/subCategory','showAllSubCategory')->name('vendor.all.subcategory')->middleware('Vendor');
     });
 });
 ################################ end Brand route ##############################
@@ -269,7 +269,7 @@ Route::get('checkout', [CartController::class, 'checkout'])->name('cart.checkout
 ############## laratrust/roles/permission route ##############################
 
  Route::group(['middleware' => ['role:superadministrator|administrator']], function () {
-     
+
      Route::resource('permission', 'PermissionController');
      Route::resource('roles', 'RoleController');
     });
