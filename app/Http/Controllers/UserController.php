@@ -38,14 +38,14 @@ class UserController extends Controller
 
     public function store(Request $request)
 
-    {     
+    {
         $this->validate($request, [
             'name' => 'required',
             'email' => 'required|email|unique:users,email',
             'password' => 'required|same:confirm-password',
             'role' => 'required'
         ]);
-       
+
         $input = $request->all();
         $input['password'] = Hash::make($input['password']);
         $user = User::create([
@@ -55,7 +55,7 @@ class UserController extends Controller
             'password' => json_encode( $request['password']),
             'role' => json_encode( $request['role']),
         ]);
-      
+
         $user->syncRoles( $request['role']);
 
         return redirect('users')->with('success','User created successfully');
@@ -72,32 +72,33 @@ class UserController extends Controller
     {
         $user = User::find($id);
         $roles = Role::pluck('name','name')->all();
+        $roles1=Role::all();
         $userRole = $user->roles->pluck('name','name')->all();
-        return view('admin.user.edit',compact('user','roles','userRole'));
+        return view('admin.user.edit',compact('user','roles','roles1','userRole'));
     }
 
     public function update(Request $request, $id)
     {
         $this->validate($request, [
             'name' => 'required',
-            'email' => 'required|email|unique:users,email,',
+            'email' =>['required','email',Rule::unique('users')->ignore(request('email'),'email')],
             'password' => 'same:confirm-password',
             'role' => 'required'
         ]);
-    
+
         $input = $request->all();
 
-        if(!empty($input['password'])){ 
+        if(!empty($input['password'])){
             $input['password'] = Hash::make($input['password']);
         }else{
-            $input = Arr::except($input,array('password'));    
+            $input = Arr::except($input,array('password'));
         }
 
         $user = User::find($id);
         $user->update($input);
-        FacadesDB::table('model_has_roles')->where('model_id',$id)->delete();
+        // FacadesDB::table('model_has_roles')->where('model_id',$id)->delete();
 
-        $user->syncRoles($request->input('role'));
+        // $user->syncRoles($request->input('role'));
 
         return redirect('users')->with('success','User updated successfully');
     }
